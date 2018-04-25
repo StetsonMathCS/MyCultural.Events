@@ -1,6 +1,5 @@
 #include "pugixml.hpp"
 #include <iostream>
-#include <sqlite3.h>
 
 using namespace std;
 
@@ -22,6 +21,7 @@ int main()
 		string link = item.child("link").child_value();
 		string guid = item.child("guid").child_value();
 		
+		/*
 		cout << RED << "title: " << NC << BOLD << title << NC << endl;
 		if (description!="")
 		{	
@@ -34,7 +34,9 @@ int main()
 		cout << RED << "link: " << NC << link << endl;
 		cout << RED << "guid: " << NC << guid << endl;
 		cout << endl << endl;
-		
-		//insertCulturalEvent(title, description, pubdate, link, guid);
+		*/
+
+		//insertEventData(title, pubdate, "no location", description);
 	}
+	cout << "data inserted" << endl;
 }
