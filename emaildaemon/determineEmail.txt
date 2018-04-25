@@ -1,0 +1,56 @@
+Heyley Gatewood
+Deliverable #1
+April 11,  2018
+Task: Write notes about the logic that will determine if a student should be emailed about a new event that is posted
+
+Total Cultural Credits needed: 24
+Rate: 6 credits/year --> 3 credits/semester
+
+Expected
+	Fr 1.) 1-3
+	   2.) 4-6
+	____________
+	So 3.) 7-9
+	   4.) 10-12
+	____________
+	Ju 5.) 13-15
+	   6.) 16-18
+	____________
+	Se 7.) 19-21
+	   8.) 22-24
+
+Priority Levels
+	HIGH PRIORITY - Automatic Email regardless of Student's Specified Interest
+		Senior <24
+		Junior <13 (Sophomore credits) 
+		Sophomore <7 (Freshman credits)
+		Freshman <1 
+
+        MEDIUM PRIORITY - Email based on Student's Specified Interest
+	    ***If a student is within their expected "1st-semester" range of cultural credits
+                Junior <16 
+                Sophomore <10 
+                Freshman <4
+
+        LOW PRIORITY: No Email
+	    ***If a student is within their expected "2nd-semester" range of cultural credits or above,
+		with the exception of Seniors***
+
+_____________________________________________________
+	
+Other Notes:
+
+OUTER Priority Levels by Year
+	EMERGENCY: 	 Second-Semester Senior 
+	URGENT: 	 First-Semester Senior
+	HIGH PRIORITY: 	 Junior 
+	MEDIUM PRIORITY: Sophomore
+	LOW PRIORITY: 	 Freshman
+		
+INNER Priority Levels by Current Number of Cutural Credits
+        EMERGENCY:       <5
+        URGENT:          5-9
+        HIGH PRIORITY:   10-15 
+        MEDIUM PRIORITY: 16-20
+        LOW PRIORITY:    >20
+
