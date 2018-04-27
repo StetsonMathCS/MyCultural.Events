@@ -130,11 +130,11 @@ void database::insertEventData(string name,string time,string loc,string desc)
 	}
 
 }
-
-void database::searchByName(string word)
+void database::searchStudentByName(string word )
 {
+	cout<<"Searching by name :"<<word<<endl;
 	char *szErrMsg = 0;
-	string s="select * from EventsTable where name='"+word+"'";
+	string s="select * from	StudentsTable where name='"+word+"'";
 	/* Execute SQL statement */
 	int rc = sqlite3_exec(db, s.c_str(), callback, NULL, &szErrMsg);
 
@@ -149,11 +149,115 @@ void database::searchByName(string word)
 
 }
 
+void database::searchStudentByEmail(string word )
+{
+	cout<<"Searching by email:"<<word<<endl;
+        char *szErrMsg = 0;
+        string s="select * from StudentsTable where email='"+word+"'";
+        /* Execute SQL statement */
+        int rc = sqlite3_exec(db, s.c_str(), callback, NULL, &szErrMsg);
+
+        if( rc != SQLITE_OK ) {
+                cout<< "SQL error:"<<szErrMsg;
+                sqlite3_free(szErrMsg);
+        }
+        else
+        {
+                //cout<< "Operation done successfully\n";
+        }
+
+}
+
+void database::searchStudentByPreferences(string word )
+{
+	cout<<"Searching by preferences:"<<word<<endl;
+        char *szErrMsg = 0;
+        string s="select * from StudentsTable where preferences='"+word+"'";
+        /* Execute SQL statement */
+        int rc = sqlite3_exec(db, s.c_str(), callback, NULL, &szErrMsg);
+
+        if( rc != SQLITE_OK ) {
+                cout<< "SQL error:"<<szErrMsg;
+                sqlite3_free(szErrMsg);
+        }
+        else
+        {
+                //cout<< "Operation done successfully\n";
+        }
+
+}
+void database::searchStudentByCurrentcc(int word )
+{
+	cout<<"Searching by currentCC:"<<word<<endl;
+
+	std::ostringstream ss;
+	ss << word;
+
+        char *szErrMsg = 0;
+        string s="select * from StudentsTable where currentCC="+ss.str()+"";
+        /* Execute SQL statement */
+        int rc = sqlite3_exec(db, s.c_str(), callback, NULL, &szErrMsg);
+
+        if( rc != SQLITE_OK ) {
+                cout<< "SQL error:"<<szErrMsg;
+                sqlite3_free(szErrMsg);
+        }
+        else
+        {
+                //cout<< "Operation done successfully\n";
+        }
+
+}
+
+void database::searchStudentByGradsemester(string word )
+{
+        cout<<"Searching by grad semester:"<<word<<endl;
+	char *szErrMsg = 0;
+        string s="select * from StudentsTable where gradSemester='"+word+"'";
+        /* Execute SQL statement */
+        int rc = sqlite3_exec(db, s.c_str(), callback, NULL, &szErrMsg);
+
+        if( rc != SQLITE_OK ) {
+                cout<< "SQL error:"<<szErrMsg;
+                sqlite3_free(szErrMsg);
+        }
+        else
+        {
+                //cout<< "Operation done successfully\n";
+        }
+
+}
+
+void database::searchStudentByGradyear(int word )
+{
+	cout<<"Searching by grad year:"<<word<<endl;
+
+	std::ostringstream ss;
+	ss << word;
+
+        char *szErrMsg = 0;
+        string s="select * from StudentsTable where gradYear="+ss.str()+"";
+        /* Execute SQL statement */
+        int rc = sqlite3_exec(db, s.c_str(), callback, NULL, &szErrMsg);
+
+        if( rc != SQLITE_OK ) {
+                cout<< "SQL error:"<<szErrMsg;
+                sqlite3_free(szErrMsg);
+        }
+        else
+        {
+                //cout<< "Operation done successfully\n";
+        }
+
+}
+
+
+
 void database::searchByLoc(string word)
 {
 	char *szErrMsg = 0;
 	string s="select * from EventsTable where location='"+word+"'";
-	sqlite3_stmt *stmt;
+//	sqlite3_stmt *stmt;
 	/* Execute SQL statement */
 	int rc = sqlite3_exec(db, s.c_str(), callback, NULL, &szErrMsg);
 
