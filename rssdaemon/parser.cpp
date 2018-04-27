@@ -1,32 +1,42 @@
 #include "pugixml.hpp"
 #include <iostream>
 
-using namespace pugi;
+using namespace std;
 
 int main()
 {
-	xml_document doc;
+	pugi::xml_document doc;
 	doc.load_file("cultural-credits.rss");
-	xml_node root = doc.child("rss").child("channel");
-	const std::string NC = "\e[0m";
-	const std::string BOLD = "\e[1m";
-	const std::string RED = "\e[38;5;196m";
+	pugi::xml_node root = doc.child("rss").child("channel");
+	const string NC = "\e[0m";
+	const string BOLD = "\e[1m";
+	const string RED = "\e[38;5;196m";
 	std::cout << std::endl;
 
-	for (xml_node item = root.child("item"); item; item = item.next_sibling("item"))
+	for (pugi::xml_node item = root.child("item"); item; item = item.next_sibling("item"))
 	{
-		std::cout << RED << "title: " << NC << BOLD << item.child("title").child_value() << NC << std::endl;
-		std::string description = item.child("description").child_value();
+		string title = item.child("title").child_value();
+		string description = item.child("description").child_value();
+		string pubdate = item.child("pubDate").child_value();
+		string link = item.child("link").child_value();
+		string guid = item.child("guid").child_value();
+		
+		/*
+		cout << RED << "title: " << NC << BOLD << title << NC << endl;
 		if (description!="")
 		{	
-			std::cout << RED << "description: " << NC << item.child("description").child_value() << std::endl;
+			cout << RED << "description: " << NC << description << endl;
 		} else 
 		{
-			std::cout << RED << "no description" << NC << std::endl;
+			cout << RED << "no description" << NC << endl;
 		}
-		std::cout << RED << "pubDate: " << NC << item.child("pubDate").child_value() << std::endl;
-		std::cout << RED << "link: " << NC << item.child("link").child_value() << std::endl;
-		std::cout << RED << "guid: " << NC << item.child("guid").child_value() << std::endl;
-		std::cout << std::endl << std::endl;
+		cout << RED << "pubDate: " << NC << pubdate << endl;
+		cout << RED << "link: " << NC << link << endl;
+		cout << RED << "guid: " << NC << guid << endl;
+		cout << endl << endl;
+		*/
+
+		//insertEventData(title, pubdate, "no location", description);
 	}
+	cout << "data inserted" << endl;
 }
