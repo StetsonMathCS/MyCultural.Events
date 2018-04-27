@@ -1,3 +1,4 @@
+
 all: demo.cgi completedemo.cgi
 
 demo.cgi: demo.o
@@ -26,4 +27,9 @@ database.o: database.h sqlite3.h database.cpp
 # Use gcc to compile this C code
 sqtlite3.o: sqlite3.h sqlite3.c
 	gcc -c sqlite3.c
+
+.PHONY: clean
+clean:
+	rm -f *.o
+
 
