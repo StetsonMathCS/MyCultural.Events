@@ -47,7 +47,6 @@ int database::createTables()
 			     "currentCC INTEGER," \
 			     "gradSemester TEXT," \
 			     "gradYear INTEGER," \
-			     "priorityLevel INTEGER," \
 			     "preferences TEXT);", NULL, NULL, &errmsg);
 	if(retval != SQLITE_OK)
 	{
@@ -82,11 +81,11 @@ int database::callback(void *NotUsed, int argc, char **argv, char **szColName)
 }
 
 
-void database::insertStudentData(int index, string name, string email, int currentCC, string gradSemester, int gradYear, int priorityLevel, string preferences)
+void database::insertStudentData(int index, string name, string email, int currentCC, string gradSemester, int gradYear, string preferences)
 {
 	
 	std::ostringstream ss;
-	string query="INSERT INTO StudentsTable(name, email, currentCC, gradSemester, gradYear, priorityLevel, preferences) VALUES (";
+	string query="INSERT INTO StudentsTable(name, email, currentCC, gradSemester, gradYear, preferences) VALUES (";
 	query.append("'"+name+"','");
         query.append(email+"',");
 	ss << currentCC;
@@ -95,10 +94,7 @@ void database::insertStudentData(int index, string name, string email, int curre
 	ss.str("");
 	ss << gradYear;
 	query.append(ss.str() + ",");
-	ss.str("");
-	ss << priorityLevel;
-        query.append(ss.str()+",'");
-	query.append(preferences + "')");
+	query.append("'" + preferences + "')");
 
         cout<<query<<endl;
         char *szErrMsg = 0;

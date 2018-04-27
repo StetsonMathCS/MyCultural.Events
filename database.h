@@ -20,7 +20,7 @@ class database
 		int getCredits(int);
 		std::string getEmail(int);
 		std::string getPreferences(int);
-		void insertStudentData(int, std::string, std::string, int, std::string, int, int, std::string);
+		void insertStudentData(int, std::string, std::string, int, std::string, int, std::string);
 		void insertEventData(std::string, std::string, std::string, std::string);
 	private:
 		sqlite3* db;
