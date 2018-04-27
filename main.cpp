@@ -83,6 +83,24 @@ void searchByEmail(string word)
 	}
 
 }
+void searchByPreference(string word)
+{
+	char *szErrMsg = 0;
+	string s="select * from myStudent where preference='"+word+"'";
+	/* Execute SQL statement */
+	int rc = sqlite3_exec(db, s.c_str(), callback, NULL, &szErrMsg);
+
+	if( rc != SQLITE_OK ) {
+		cout<< "SQL error:"<<szErrMsg;
+		sqlite3_free(szErrMsg);
+	}
+	else
+	{
+		//cout<< "Operation done successfully\n";
+	}
+
+}
+
 
 //search by currentCC
 void searchByCurrentcc(string word)
@@ -230,10 +248,14 @@ int main()
 
 //	cout<<"Total rows in table:"<<rowsIntable()<<endl;
 	// name , email , currentcc, gradSemester, gradYear
-//	insertData("test","test",10,"test",2020,"test");
-	//cout<<"Searching with semester "<<endl;
-//	searchByGradyear(2020);
+	//	insertData("test","test",10,"test",2020,"test");
+	
+	//	insertData("abdullah","gmail.com",3,"test",2020,"music");
 
+//cout<<"Searching with semester "<<endl;
+//	searchByGradyear(2020);
+	//	cout << "Sreaching with preference" << endl;
+	//	searchByPreference("music");
 
 	// Close database
 	if (db)
