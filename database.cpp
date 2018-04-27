@@ -290,7 +290,26 @@ void database::searchByDesc(string word)
 
 }
 
+void database::searchById(int i)
+{
+	char *szErrMsg = 0;
+        string s="select * from EventsTable where id=";
+	std::ostringstream ss;
+	ss << i;
+	
+        /* Execute SQL statement */
+        int rc = sqlite3_exec(db, s.c_str(), callback, NULL, &szErrMsg);
 
+        if( rc != SQLITE_OK ) {
+                cout<< "SQL error:"<<szErrMsg;
+                sqlite3_free(szErrMsg);
+        }
+        else
+        {
+                //cout<< "Operation done successfully\n";
+        }
+
+}
 void database::toString()
 {
 	sqlite3_stmt *s;
@@ -311,6 +330,7 @@ void database::toString()
 	}
 
 }
+
 int database::getID(string email)
 {
 	int ID = 0;
