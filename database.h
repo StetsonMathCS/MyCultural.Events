@@ -28,6 +28,8 @@ class database
 		std::string getPreferences(int);
 		void insertStudentData(int, std::string, std::string, int, std::string, int, std::string);
 		void insertEventData(std::string, std::string, std::string, std::string);
+		void searchById(int);
+
 	private:
 		sqlite3* db;
 		char* errmsg;
