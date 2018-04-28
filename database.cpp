@@ -193,7 +193,7 @@ void database::searchStudentByName(string word )
 // search students with the same email, " i mean its impossible :P "
 void database::searchStudentByEmail(string word )
 {
-  sqlite3_stmt *stmt;
+    sqlite3_stmt *stmt;
     const char *pzTest;
     
     string s = "select * from StudentsTable where email=?";
@@ -224,7 +224,7 @@ void database::searchStudentByEmail(string word )
 // search students with the same preferences " music, sports ... etc "
 void database::searchStudentByPreferences(string word )
 {
-  sqlite3_stmt *stmt;
+    sqlite3_stmt *stmt;
     const char *pzTest;
     
     string s = "select * from StudentsTable where preferences=?";
@@ -257,7 +257,7 @@ void database::searchStudentByCurrentcc(int word )
     sqlite3_stmt *stmt;
     const char *pzTest;
     
-    string s = "select * from myStudent where currentCC=?";
+    string s = "select * from StudentsTable where currentCC=?";
     
     int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
     
@@ -318,10 +318,10 @@ void database::searchStudentByGradsemester(string word )
 // search students with the same graduation year
 void database::searchStudentByGradyear(int word )
 {
-sqlite3_stmt *stmt;
+    sqlite3_stmt *stmt;
     const char *pzTest;
     
-    string s = "select * from myStudent where gradYear=?";
+    string s = "select * from StudentsTable where gradYear=?";
     
     int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
     
