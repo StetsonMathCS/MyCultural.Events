@@ -29,6 +29,8 @@ class database
 		void insertStudentData(int, std::string, std::string, int, std::string, int, std::string);
 		void insertEventData(std::string, std::string, std::string, std::string);
 		void searchById(int);
+		int rowsInStudentTable();
+		bool checkEmptyStudentTable();
 
 	private:
 		sqlite3* db;

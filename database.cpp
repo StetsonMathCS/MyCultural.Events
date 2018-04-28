@@ -130,6 +130,34 @@ void database::insertEventData(string name,string time,string loc,string desc)
 	}
 
 }
+// return is the table has values and how many
+int database::rowsInStudentTable ( )
+{
+	int count=0;
+	sqlite3_stmt * stmt;
+	sqlite3_prepare( db, "SELECT * from StudentsTable;", -1, &stmt, NULL );//preparing the statement
+	sqlite3_step( stmt );//executing the statement
+
+	while( sqlite3_column_text( stmt, 0 ) )
+	{
+		count++;
+		sqlite3_step( stmt );
+	}
+	return count;
+
+}
+
+// checks if the tables is empty
+bool database::checkEmptyStudentTable ( )
+{
+	int c=rowsIntable();
+	if(c==0)
+		return true;
+
+	return false;
+}
+
+// search for studnets with the same name
 void database::searchStudentByName(string word )
 {
     sqlite3_stmt *stmt;
@@ -162,6 +190,7 @@ void database::searchStudentByName(string word )
 	
 }
 
+// search students with the same email, " i mean its impossible :P "
 void database::searchStudentByEmail(string word )
 {
   sqlite3_stmt *stmt;
@@ -192,7 +221,7 @@ void database::searchStudentByEmail(string word )
 
 
 }
-
+// search students with the same preferences " music, sports ... etc "
 void database::searchStudentByPreferences(string word )
 {
   sqlite3_stmt *stmt;
@@ -225,7 +254,7 @@ void database::searchStudentByPreferences(string word )
 }
 void database::searchStudentByCurrentcc(int word )
 {
-sqlite3_stmt *stmt;
+    sqlite3_stmt *stmt;
     const char *pzTest;
     
     string s = "select * from myStudent where currentCC=?";
@@ -253,6 +282,7 @@ sqlite3_stmt *stmt;
 
 }
 
+// search students with the same semester graduation
 void database::searchStudentByGradsemester(string word )
 {
     sqlite3_stmt *stmt;
@@ -285,6 +315,7 @@ void database::searchStudentByGradsemester(string word )
 
 }
 
+// search students with the same graduation year
 void database::searchStudentByGradyear(int word )
 {
 sqlite3_stmt *stmt;
