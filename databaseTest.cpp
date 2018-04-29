@@ -14,7 +14,8 @@ int main()
         db.searchByName("Dinner");
         cout << "Searching for the commons: " << endl;
         db.searchByLoc("the commons");
-
+	db.searchStudentByName("kyle");
+	db.searchStudentByGradyear(2018);
         return 0;
 }
 
