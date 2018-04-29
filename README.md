@@ -1,6 +1,8 @@
 # MyCultural.Events
 
 
+
+
 # Contributors
 
 Joshua Eckroth
@@ -9,3 +11,5 @@ Greg Kline
 Isabel Ho Li
 Mohammed Batarfi
 Abdullah Bin Salamah
+Mikhail Maksimov
+Kyle Burda

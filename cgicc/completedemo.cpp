@@ -31,6 +31,8 @@
 #include "cgicc/Cgicc.h"
 #include "cgicc/HTTPHTMLHeader.h"
 #include "cgicc/HTMLClasses.h"
+#include "database.h"
+
 
 #if HAVE_SYS_UTSNAME_H
 #  include <sys/utsname.h>
@@ -59,51 +61,47 @@ printForm(const Cgicc& cgi)
 
 	cout << "<table>" << endl;
 
-	cout << "<tr><td class=\"title\">Your first  name</td>"
-		<< "<td class=\"form\">"
-		<< "<input type=\"text\" name=\"name\" value=\"John\" maxlength=\"30\" pattern=\"[A-Za-z]+\"/>"
-		<< "</td></tr>" << endl;
+	/*   cout << "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">";
 
-	cout << "<tr><td class=\"title\">Your email address<br />(example@stetson.edu)</td>"
-		<< "<td class=\"form\">"
-		<< "<input type=\"email\" name=\"email\" value=\"example@stetson.edu\" maxlength=\"50\" />"
-		<< "</td></tr>" << endl;
+	 */
+	cout << "";
+	cout << "<html>\n";
+	cout << "<head>\n";
+	// cout << "<h1>The Cultural Events</h1>\n";
+	cout << "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">";
+	cout << "<script></script>\n";
+	cout << "<div class=\"container\">\n";
+	cout << "<form>\n";
 
-	cout << "<tr><td class=\"title\">Expected Graduation<br />(Date)</td>"
-		<< "<td class=\"form\">"
-		<< "<input type=\"date\" name=\"years\" value=\"2018-01-01\" min=\"2018-01-01\" />"
-		<< "</td></tr>" << endl;
+	cout << "<div class=\"form-group\">\n";	
+	cout <<	"<label for=\"name\">First Name</label>";
+	cout << "<input type=\"text\" class=\"form-control\" name=\"name\" value = \"John\" aria-describedby=\"emailHelp\" placeholder=\"Enter first name\">";
+	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter your first name.</small>";
+	cout << "</div>";
 
+	cout << "<div class=\"form-group\">\n";	
+	cout <<	"<label for=\"name\">E-mail Address</label>";
+	cout << "<input type=\"text\" class=\"form-control\" name=\"email\" value = \"example@stetson.edu\" aria-describedby=\"emailHelp\" placeholder=\"Enter your e-mail address\">";
+	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter your email address</small>";
+	cout << "</div>";
 
-	//  cout << "<tr><td class=\"title\">Expected Graduation<br />(Year)</td>"
-	//       << "<td class=\"form\">"
-	//       << "<select name=\"years\">"
-	//       << "<option value=\"2018\">2018</option>"
-	//       << "<option value=\"2019\">2019</option>"
-	//       << "<option value=\"2020\">2020</option>"
-	//       << "<option value=\"2021\">2021</option>"
-	//       << "<option value=\"2022\">2022</option>"
-	//       << "</select>" << "</td></tr>" << endl;
+	cout << "<div class=\"form-group\">\n";	
+	cout <<	"<label for=\"name\">Graduation Year</label>";
+	cout << "<input type=\"text\" class=\"form-control\" name=\"years\" value = \"2018-01-01\" min=\"2018-01-01\" aria-describedby=\"emailHelp\" placeholder=\"Enter a year\">";
+	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter the year you will graduate</small>";
+	cout << "</div>";
 
-	//  cout << "<tr><td class=\"title\">Expected Graduation (Semester)<br /></td>"
-	//       << "<td class=\"form\">"
-	//       << "<select name=\"semester\">"
-	//       << "<option value=\"fall\">Fall</option>"
-	//	// << "<option value=\"\">Fall</option>"
-	//       << "<option value=\"winter\">Winter</option>"
-	//       << "<option value=\"spring\">Spring</option>"
-	//       << "<option value=\"summer\">Summer</option>"
-	//       << "</select>" << "</td></tr>" << endl;
+	cout << "<div class=\"form-group\">\n";	
+	cout <<	"<label for=\"name\">Cultural Credits</label>";
+	cout << "<input type=\"text\" class=\"form-control\" name=\"credits\" value = \"20\" aria-describedby=\"emailHelp\" placeholder=\"Enter # of credits\">";
+	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Number of desired cultural credits.</small>";
+	cout << "</div>";
 
-	cout << "<tr><td class=\"title\"># Of Cultural Credits Needed<br />(as of now)</td>"
-		<< "<td class=\"form\">"
-		<< "<input type=\"number\" name=\"credits\" value=\"20\" min=\"1\" max=\"24\" />"
-		<< "</td></tr>" << endl;
-
-	cout << "<tr><td class=\"title\">Event Prefernces<br />(keywords)</td>"
-		<< "<td class=\"form\">"
-		<< "<input type=\"text\" name=\"event\" value=\"tech\" max=\"60\" />"
-		<< "</td></tr>" << endl;
+	cout << "<div class=\"form-group\">\n";	
+	cout <<	"<label for=\"name\">Event preferences</label>";
+	cout << "<input type=\"text\" class=\"form-control\" name=\"events\" value = \"tech\" aria-describedby=\"emailHelp\" placeholder=\"Enter words related to your interests\">";
+	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter words related to your interests</small>";
+	cout << "</div>";
 
 
 	cout << "<tr><td class=\"title\">In the output, show</td>"
@@ -115,6 +113,8 @@ printForm(const Cgicc& cgi)
 		<< "<input type=\"checkbox\" name=\"showForm\" checked=\"checked\" />"
 		<< "Data from Cgicc"
 		<< "</td></tr>" << endl;
+
+
 
 	cout << "<tr><td class=\"title\">Exception Handling</td>"
 		<< "<td class=\"form\">"
@@ -210,7 +210,7 @@ int main(int /*argc*/,
 
 		// Create a new Cgicc object containing all the CGI data
 		Cgicc cgi;
-
+		//	Database data;
 		// If the user wants to throw an exception, go ahead and do it
 		if(cgi.queryCheckbox("throw") && ! cgi.queryCheckbox("restore"))
 			throw std::runtime_error("User-requested Exception thrown in main()");
@@ -243,6 +243,20 @@ int main(int /*argc*/,
 		// Generic thank you message
 		cout << comment() << "This page generated by cgicc for "
 			<< env.getRemoteHost() << comment() << endl;
+	if (checkName(cgi)&&checkCredits(cgi)&&checkDate(cgi)&&checkEvents(cgi)){ 
+
+ const_form_iterator name = cgi.getElement("name");
+  const_form_iterator mail = cgi.getElement("email");
+ const_form_iterator year = cgi.getElement("years");
+const_form_iterator semesters = cgi.getElement("semester");
+  const_form_iterator credit = cgi.getElement("credits");
+const_form_iterator tags = cgi.getElement("event");
+		database db;
+ db.insertStudent(1,name->getStrippedValue(),mail->getStrippedValue(), credit->getIntegerValue(), tags->getStrippedValue());
+
+	//db.insertStudentData(1," John", 2017, 3, "Apple", 2, "Pizza");
+	}
+
 
 		// If the user wants to save the submission, do it
 		if(cgi.queryCheckbox("save")) {
@@ -511,15 +525,15 @@ showForm(const Cgicc& formData)
 
 		// getElement and getIntegerValue
 		const_form_iterator year = formData.getElement("years");
-		if(year != (*formData).end() && ! (*year).isEmpty())
-			cout << "GRADUATION YEAR: " << (*year).getIntegerValue() <<  br() << endl;
+		if(year != (*formData).end() && ! year->isEmpty())
+			cout << "GRADUATION YEAR: " << year->getIntegerValue() <<  br() << endl;
 		else
 			cout << "NO YEAR SELECTED" << br() << endl;
 
 		// getElement and getStrippedValue
 		const_form_iterator semesters = formData.getElement("semester");
-		if(semesters != (*formData).end() && ! (*semesters).isEmpty()) {
-			std::string temp = (*semesters).getStrippedValue();
+		if(semesters != (*formData).end() && ! semesters->isEmpty()) {
+			std::string temp = semesters->getStrippedValue();
 			cout << "SEMESTER: " << temp << br() << endl;
 		}
 		else
@@ -527,8 +541,8 @@ showForm(const Cgicc& formData)
 
 		// getElement and getStrippedValue
 		const_form_iterator credit = formData.getElement("credits");
-		if(credit != (*formData).end() && ! (*credit).isEmpty()) {
-			int temp = (*credit).getIntegerValue();
+		if(credit != (*formData).end() && ! credit->isEmpty()) {
+			int temp = credit->getIntegerValue();
 			cout << "NEEDED CREDITS: " << temp << br() << endl;
 		}
 		else
@@ -536,13 +550,14 @@ showForm(const Cgicc& formData)
 
 		// getElement and getStrippedValue
 		const_form_iterator tags = formData.getElement("event");
-		if(tags != (*formData).end() && ! (*tags).isEmpty()) {
-			std::string temp = (*tags).getStrippedValue();
+		if(tags != (*formData).end() && ! tags->isEmpty()) {
+			std::string temp = tags->getStrippedValue();
 			cout << "TAGS: " << temp << br() << endl;
 		}
 		else
 			cout << "NO TAGS" << br() << endl; 
 
+	
 		cout << cgicc::div() << endl;
 	}
 }
