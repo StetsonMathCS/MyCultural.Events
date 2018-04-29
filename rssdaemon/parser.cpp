@@ -17,9 +17,11 @@ int main()
 	for (pugi::xml_node item = root.child("item"); item; item = item.next_sibling("item"))
 	{
 		string title = item.child("title").child_value();
-		if (title.find('*') < 1)
+		if (title.find('*')!=string::npos)
 		{
-			title = title.substr(1,title.length()-1);
+			for (unsigned int i = 0; i < title.length(); i++)
+
+				title = title.substr(1,title.length()-1);
 		}
 		string description = item.child("description").child_value();
 		string pubdate = item.child("pubDate").child_value();
@@ -27,7 +29,7 @@ int main()
 		string guid = item.child("guid").child_value();
 		
 		
-		cout << RED << "title: " << NC << BOLD << title << NC << endl;
+		//cout << RED << "title: " << NC << BOLD << title << NC << endl;
 		if (description!="")
 		{	
 			//cout << RED << "description: " << NC << description << endl;
@@ -38,11 +40,17 @@ int main()
 		//cout << RED << "pubDate: " << NC << pubdate << endl;
 		//cout << RED << "link: " << NC << link << endl;
 		//cout << RED << "guid: " << NC << guid << endl;
-		cout << endl << endl;
+		//cout << endl << endl;
 		
 
 		//test.insertEventData(title, pubdate, "no location", description);
 	}
+	
+	for (int i = 0; i < 20; i++)
+	{
+		test.searchById(i);
+	}
+
 	//test.searchByName("Global Perspectives on Economic Development");
 	//cout << "data inserted" << endl;
 }
