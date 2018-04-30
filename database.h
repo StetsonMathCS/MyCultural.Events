@@ -12,7 +12,6 @@ class database
 		int createTables();	
 		int getID(std::string);
 		std::string getName(int);
-		void toString();
 		void searchByName(std::string);
 		void searchByDesc(std::string);
 		void searchStudentByName(std::string);
@@ -22,14 +21,13 @@ class database
 		void searchStudentByGradsemester(std::string);
 		void searchStudentByGradyear(int);
 		void searchByLoc(std::string);
-		void serachById(int id);
+		void searchById(int);
 		static int callback(void*, int, char**, char**);
 		int getCredits(int);
 		std::string getEmail(int);
 		std::string getPreferences(int);
 		void insertStudentData(int, std::string, std::string, int, std::string, int, std::string);
 		void insertEventData(std::string, std::string, std::string, std::string);
-		void searchById(int);
 		int rowsInStudentTable();
 		bool checkEmptyStudentTable();
 

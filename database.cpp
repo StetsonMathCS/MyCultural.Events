@@ -188,7 +188,7 @@ void database::searchStudentByName(string word )
 }
 
 	
-}
+
 
 // search students with the same email, " i mean its impossible :P "
 void database::searchStudentByEmail(string word )
@@ -252,7 +252,7 @@ void database::searchStudentByPreferences(string word )
 
 
 }
-void database::searchStudentByCurrentcc(int word )
+void database::searchStudentByCurrentcc(int curcc)
 {
     sqlite3_stmt *stmt;
     const char *pzTest;
@@ -260,11 +260,9 @@ void database::searchStudentByCurrentcc(int word )
     string s = "select * from StudentsTable where currentCC=?";
     
     int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
-    
-    if (sqlite3_bind_int(stmt, 1, cc) != SQLITE_OK) {
+    if (sqlite3_bind_int(stmt, 1, curcc) != SQLITE_OK) {
         return;
     }
-    
     //Read each row
     while ( (rc = sqlite3_step(stmt)) == SQLITE_ROW) {
         cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
@@ -316,7 +314,7 @@ void database::searchStudentByGradsemester(string word )
 }
 
 // search students with the same graduation year
-void database::searchStudentByGradyear(int word )
+void database::searchStudentByGradyear(int year)
 {
     sqlite3_stmt *stmt;
     const char *pzTest;
@@ -325,9 +323,11 @@ void database::searchStudentByGradyear(int word )
     
     int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
     
+    /*
     if (sqlite3_bind_int(stmt, 1, year) != SQLITE_OK) {
         return;
     }
+    */
     
     //Read each row
     while ( (rc = sqlite3_step(stmt)) == SQLITE_ROW) {
@@ -397,7 +397,7 @@ void database::searchById(int i)
         int rc = sqlite3_exec(db, s.c_str(), callback, NULL, &szErrMsg);
 
         if( rc != SQLITE_OK ) {
-                cout<< "SQL error:"<<szErrMsg;
+                cout<< "SQL error: "<< szErrMsg << endl;
                 sqlite3_free(szErrMsg);
         }
         else
@@ -406,3 +406,4 @@ void database::searchById(int i)
         }
 
 }
+

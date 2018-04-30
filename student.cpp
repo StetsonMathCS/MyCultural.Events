@@ -37,7 +37,6 @@ Student::Student(string _name, string _email, int _id, string _gradSem, int _gra
     sendInterestEmail = false;
 }
 
-
 void Student::setName(string nm)
 {
     name = nm;

@@ -87,9 +87,17 @@ printForm(const Cgicc& cgi)
 
 	cout << "<div class=\"form-group\">\n";	
 	cout <<	"<label for=\"name\">Graduation Year</label>";
-	cout << "<input type=\"text\" class=\"form-control\" name=\"years\" value = \"2018-01-01\" min=\"2018-01-01\" aria-describedby=\"emailHelp\" placeholder=\"Enter a year\">";
+	cout << "<input type=\"text\" class=\"form-control\" name=\"years\" value = \"2018\" min=\"2018-01-01\" aria-describedby=\"emailHelp\" placeholder=\"Enter a year\">";
 	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter the year you will graduate</small>";
 	cout << "</div>";
+
+	
+	cout << "<div class=\"form-group\">\n";	
+	cout <<	"<label for=\"name\">Graduation Semester</label>";
+	cout << "<input type=\"text\" class=\"form-control\" name=\"semesters\" value = \"Spring\" min=\"2018-01-01\" aria-describedby=\"emailHelp\" placeholder=\"Enter a semester\">";
+	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter the semester you will graduate</small>";
+	cout << "</div>";
+
 
 	cout << "<div class=\"form-group\">\n";	
 	cout <<	"<label for=\"name\">Cultural Credits</label>";

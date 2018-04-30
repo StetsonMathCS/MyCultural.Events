@@ -16,7 +16,7 @@ private:
     std::string gradSem;
     int gradYear;
     int currentCC;
-    std::set<std::string> interests;
+    std::string interests;
     int priorityLevel;
     
 protected:
