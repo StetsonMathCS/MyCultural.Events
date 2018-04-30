@@ -130,30 +130,229 @@ void database::insertEventData(string name,string time,string loc,string desc)
 	}
 
 }
-
-void database::searchByName(string word)
+// return is the table has values and how many
+int database::rowsInStudentTable ( )
 {
-	char *szErrMsg = 0;
-	string s="select * from EventsTable where name='"+word+"'";
-	/* Execute SQL statement */
-	int rc = sqlite3_exec(db, s.c_str(), callback, NULL, &szErrMsg);
+	int count=0;
+	sqlite3_stmt * stmt;
+	sqlite3_prepare( db, "SELECT * from StudentsTable;", -1, &stmt, NULL );//preparing the statement
+	sqlite3_step( stmt );//executing the statement
 
-	if( rc != SQLITE_OK ) {
-		cout<< "SQL error:"<<szErrMsg;
-		sqlite3_free(szErrMsg);
-	}
-	else
+	while( sqlite3_column_text( stmt, 0 ) )
 	{
-		//cout<< "Operation done successfully\n";
+		count++;
+		sqlite3_step( stmt );
 	}
+	return count;
 
 }
+
+// checks if the tables is empty
+bool database::checkEmptyStudentTable ( )
+{
+	int c=rowsIntable();
+	if(c==0)
+		return true;
+
+	return false;
+}
+
+// search for studnets with the same name
+void database::searchStudentByName(string word )
+{
+    sqlite3_stmt *stmt;
+    const char *pzTest;
+    
+    string s = "select * from StudentsTable where name=?";
+    
+    int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
+    
+    if (sqlite3_bind_text(stmt, 1, word.c_str(), -1, NULL) != SQLITE_OK) {
+        return;
+    }
+    
+    //Read each row
+    while ( (rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
+        cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
+        cout << "email = " << sqlite3_column_text(stmt, 2) << endl;
+        cout << "currentCC = " << sqlite3_column_int(stmt, 3) << endl;
+        cout << "gradSemester = " << sqlite3_column_text(stmt, 4) << endl;
+        cout << "gradYear = " << sqlite3_column_int(stmt, 5) << endl;
+        cout << "preferences = " << sqlite3_column_text(stmt, 6) << endl;
+        
+        cout << endl;
+    }
+    
+    sqlite3_finalize(stmt);
+}
+
+	
+}
+
+// search students with the same email, " i mean its impossible :P "
+void database::searchStudentByEmail(string word )
+{
+    sqlite3_stmt *stmt;
+    const char *pzTest;
+    
+    string s = "select * from StudentsTable where email=?";
+    
+    int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
+    
+    if (sqlite3_bind_text(stmt, 1, word.c_str(), -1, NULL) != SQLITE_OK) {
+        return;
+    }
+    
+    //Read each row
+    while ( (rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
+        cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
+        cout << "email = " << sqlite3_column_text(stmt, 2) << endl;
+        cout << "currentCC = " << sqlite3_column_int(stmt, 3) << endl;
+        cout << "gradSemester = " << sqlite3_column_text(stmt, 4) << endl;
+        cout << "gradYear = " << sqlite3_column_int(stmt, 5) << endl;
+        cout << "preferences = " << sqlite3_column_text(stmt, 6) << endl;
+        
+        cout << endl;
+    }
+    
+    sqlite3_finalize(stmt);
+
+
+}
+// search students with the same preferences " music, sports ... etc "
+void database::searchStudentByPreferences(string word )
+{
+    sqlite3_stmt *stmt;
+    const char *pzTest;
+    
+    string s = "select * from StudentsTable where preferences=?";
+    
+    int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
+    
+    if (sqlite3_bind_text(stmt, 1, word.c_str(), -1, NULL) != SQLITE_OK) {
+        return;
+    }
+    
+    //Read each row
+    while ( (rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
+        cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
+        cout << "email = " << sqlite3_column_text(stmt, 2) << endl;
+        cout << "currentCC = " << sqlite3_column_int(stmt, 3) << endl;
+        cout << "gradSemester = " << sqlite3_column_text(stmt, 4) << endl;
+        cout << "gradYear = " << sqlite3_column_int(stmt, 5) << endl;
+        cout << "preferences = " << sqlite3_column_text(stmt, 6) << endl;
+        
+        cout << endl;
+    }
+    
+    sqlite3_finalize(stmt);
+
+
+}
+void database::searchStudentByCurrentcc(int word )
+{
+    sqlite3_stmt *stmt;
+    const char *pzTest;
+    
+    string s = "select * from StudentsTable where currentCC=?";
+    
+    int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
+    
+    if (sqlite3_bind_int(stmt, 1, cc) != SQLITE_OK) {
+        return;
+    }
+    
+    //Read each row
+    while ( (rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
+        cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
+        cout << "email = " << sqlite3_column_text(stmt, 2) << endl;
+        cout << "currentCC = " << sqlite3_column_int(stmt, 3) << endl;
+        cout << "gradSemester = " << sqlite3_column_text(stmt, 4) << endl;
+        cout << "gradYear = " << sqlite3_column_int(stmt, 5) << endl;
+        cout << "preference = " << sqlite3_column_text(stmt, 6) << endl;
+        
+        cout << endl;
+    }
+    
+    sqlite3_finalize(stmt);
+
+}
+
+// search students with the same semester graduation
+void database::searchStudentByGradsemester(string word )
+{
+    sqlite3_stmt *stmt;
+    const char *pzTest;
+    
+    string s = "select * from StudentsTable where gradSemester=?";
+    
+    int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
+    
+    if (sqlite3_bind_text(stmt, 1, word.c_str(), -1, NULL) != SQLITE_OK) {
+        return;
+    }
+    
+    //Read each row
+    while ( (rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
+        cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
+        cout << "email = " << sqlite3_column_text(stmt, 2) << endl;
+        cout << "currentCC = " << sqlite3_column_int(stmt, 3) << endl;
+        cout << "gradSemester = " << sqlite3_column_text(stmt, 4) << endl;
+        cout << "gradYear = " << sqlite3_column_int(stmt, 5) << endl;
+        cout << "preferences = " << sqlite3_column_text(stmt, 6) << endl;
+        
+        cout << endl;
+    }
+    
+    sqlite3_finalize(stmt);
+
+
+
+}
+
+// search students with the same graduation year
+void database::searchStudentByGradyear(int word )
+{
+    sqlite3_stmt *stmt;
+    const char *pzTest;
+    
+    string s = "select * from StudentsTable where gradYear=?";
+    
+    int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
+    
+    if (sqlite3_bind_int(stmt, 1, year) != SQLITE_OK) {
+        return;
+    }
+    
+    //Read each row
+    while ( (rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
+        cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
+        cout << "email = " << sqlite3_column_text(stmt, 2) << endl;
+        cout << "currentCC = " << sqlite3_column_int(stmt, 3) << endl;
+        cout << "gradSemester = " << sqlite3_column_text(stmt, 4) << endl;
+        cout << "gradYear = " << sqlite3_column_int(stmt, 5) << endl;
+        cout << "preference = " << sqlite3_column_text(stmt, 6) << endl;
+        
+        cout << endl;
+    }
+    
+    sqlite3_finalize(stmt);
+
+}
+
+
 
 void database::searchByLoc(string word)
 {
 	char *szErrMsg = 0;
 	string s="select * from EventsTable where location='"+word+"'";
-	sqlite3_stmt *stmt;
+//	sqlite3_stmt *stmt;
 	/* Execute SQL statement */
 	int rc = sqlite3_exec(db, s.c_str(), callback, NULL, &szErrMsg);
 
