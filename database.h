@@ -16,6 +16,7 @@ class database
 		void searchByName(std::string);
 		void searchByDesc(std::string);
 		void searchByLoc(std::string);
+		void serachById(int id);
 		static int callback(void*, int, char**, char**);
 		int getCredits(int);
 		std::string getEmail(int);
