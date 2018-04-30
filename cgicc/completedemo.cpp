@@ -110,7 +110,7 @@ printForm(const Cgicc& cgi)
 	cout << "<input type=\"text\" class=\"form-control\" name=\"events\" value = \"tech\" aria-describedby=\"emailHelp\" placeholder=\"Enter words related to your interests\">";
 	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter words related to your interests</small>";
 	cout << "</div>";
-
+/*
 
 	cout << "<tr><td class=\"title\">In the output, show</td>"
 		<< "<td class=\"form\">"
@@ -139,7 +139,7 @@ printForm(const Cgicc& cgi)
 		<< "</td></tr>" << endl;
 
 	cout << "</table>" << endl;
-
+*/
 	cout << "<div class=\"center\"><p>"
 		<< "<input type=\"submit\" name=\"submit\"  value=\"Submit\" />"
 		<< "<input type=\"reset\" value=\"Nevermind\" />"
@@ -295,22 +295,20 @@ int main(int /*argc*/,
 		// This is different than the use of the list of FormEntries 
 		// because it requires prior knowledge of the name of form elements.
 		// Usually they will be known, but you never know.
-		if(cgi.queryCheckbox("showForm"))
-			showForm(cgi);
-		//}
+					//}
 		// Print out the form to do it again
 		cout << br() << endl;
 		printForm(cgi);
 		cout << hr().set("class", "half") << endl;
 
 		// Information on cgicc
-		cout << cgicc::div().set("align","center").set("class","smaller") << endl;
-		cout << "GNU cgi" << span("cc").set("class","red") << " v";
-		cout << cgi.getVersion() << br() << endl;
-		cout << "Compiled at " << cgi.getCompileTime();
-		cout << " on " << cgi.getCompileDate() << br() << endl;
+	//	cout << cgicc::div().set("align","center").set("class","smaller") << endl;
+	//	cout << "GNU cgi" << span("cc").set("class","red") << " v";
+	//	cout << cgi.getVersion() << br() << endl;
+	//	cout << "Compiled at " << cgi.getCompileTime();
+	//	cout << " on " << cgi.getCompileDate() << br() << endl;
 
-		cout << "Configured for " << cgi.getHost();  
+	//	cout << "Configured for " << cgi.getHost();  
 #if HAVE_UNAME
 		struct utsname info;
 		if(uname(&info) != -1) {
@@ -338,6 +336,7 @@ int main(int /*argc*/,
 		cout << body() << html() << endl;
 
 			if (checkName(cgi)&&checkCredits(cgi)&&checkDate(cgi)&&checkEvents(cgi)){ 
+				showForm(cgi);
 
 			const_form_iterator name = cgi.getElement("name");
 			const_form_iterator mail = cgi.getElement("email");
@@ -490,6 +489,7 @@ dumpList(const Cgicc& formData)
 {
 	if (checkName(formData)&&checkCredits(formData)&&checkDate(formData)&&checkEvents(formData)){ 
 
+
 		cout << h2("Form Data via vector") << endl;
 
 		cout << cgicc::div().set("align","center") << endl;
@@ -515,64 +515,13 @@ dumpList(const Cgicc& formData)
 	void
 showForm(const Cgicc& formData) 
 {
-	if (checkName(formData)&&checkCredits(formData)&&checkDate(formData)&&checkEvents(formData)){ 
+	if (checkName(formData)&&checkCredits(formData)&&checkDate(formData)&&checkEvents(formData)){ 		
 
-		// I am using an if statement to check if each element is found
-		cout << h2("Form Data via Cgicc") << endl;
-
-		cout << cgicc::div().set("class","notice") << endl;
-
-		//getElement
-		const_form_iterator name = formData.getElement("name");
-		if(name != (*formData).end() && ! name->isEmpty()){
-			if((*name).getStrippedValue().length() <= 30){
-				cout << "Your name is " << **name << '.' << br() << endl;
-			}
-		} else
-			cout << "No name entered" << br() << endl;
-
-		// getElement and getDoubleValue
-		const_form_iterator mail = formData.getElement("email");
-		if(mail != (*formData).end() && ! mail->isEmpty())
-			cout << "EMAIL: " << **mail  << br() << endl;
-		else
-			cout << "NO EMAIL ENTERED" << br() << endl;
-
-		// getElement and getIntegerValue
-		const_form_iterator year = formData.getElement("years");
-		if(year != (*formData).end() && ! year->isEmpty())
-			cout << "GRADUATION YEAR: " << year->getIntegerValue() <<  br() << endl;
-		else
-			cout << "NO YEAR SELECTED" << br() << endl;
-
-		// getElement and getStrippedValue
-		const_form_iterator semesters = formData.getElement("semester");
-		if(semesters != (*formData).end() && ! semesters->isEmpty()) {
-			std::string temp = semesters->getStrippedValue();
-			cout << "SEMESTER: " << temp << br() << endl;
-		}
-		else
-			cout << "NO SEMESTER SELECTED" << br() << endl;
-
-		// getElement and getStrippedValue
-		const_form_iterator credit = formData.getElement("credits");
-		if(credit != (*formData).end() && ! credit->isEmpty()) {
-			int temp = credit->getIntegerValue();
-			cout << "NEEDED CREDITS: " << temp << br() << endl;
-		}
-		else
-			cout << "NO CREDITS" << br() << endl;
-
-		// getElement and getStrippedValue
-		const_form_iterator tags = formData.getElement("event");
-		if(tags != (*formData).end() && ! tags->isEmpty()) {
-			std::string temp = tags->getStrippedValue();
-			cout << "TAGS: " << temp << br() << endl;
-		}
-		else
-			cout << "NO TAGS" << br() << endl; 
+	cout << "<div class=\"form-group\">\n";
+	cout << "<font size=\"+2\">Thank You!</font>"; 	
+	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Your infommation was stored successfully!</small>";
+	cout << "</div>";
 
 
-		cout << cgicc::div() << endl;
 	}
 }
