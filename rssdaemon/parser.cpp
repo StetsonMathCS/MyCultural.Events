@@ -9,7 +9,7 @@ int main()
 	pugi::xml_document doc;
 	doc.load_file("cultural-credits.rss");
 	pugi::xml_node root = doc.child("rss").child("channel");
-	database test;
+	database db;
 	const string NC = "\e[0m";
 	const string BOLD = "\e[1m";
 	const string RED = "\e[38;5;196m";
@@ -46,11 +46,11 @@ int main()
 		//test.insertEventData(title, pubdate, "no location", description);
 	}
 	
-	for (int i = 0; i < 20; i++)
+		
+	for (int i = 1; i <= 30; i++)
 	{
-		test.searchById(i);
+		db.searchById(i);
 	}
-
 	//test.searchByName("Global Perspectives on Economic Development");
 	//cout << "data inserted" << endl;
 }
