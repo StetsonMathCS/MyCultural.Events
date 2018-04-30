@@ -1,11 +1,11 @@
+#include <iostream>
 #include "automaticemail.h"
 #include "interestemail.h"
 #include "student.h"
+#include <ctime>
+
 #include <list>
 #include <set>
-
-//#include "culturalcredit.h"
-
 using namespace std;
 
 Student::Student() : interests()
@@ -13,10 +13,9 @@ Student::Student() : interests()
     name = "noname";
     email = "student@stetson.edu";
     identity = -1;
-    gradSem = -1;
+    gradSem = "Fall";
     gradYear = -1;
     currentCC = -1;
-    priorityLevel = -1; //LOW PRIORITY
     
     sendAutomaticEmail = false;
     sendInterestEmail = false;
@@ -24,7 +23,7 @@ Student::Student() : interests()
 }
 
 
-Student::Student(string _name, string _email, int _id, int _gradSem, int _gradYear, int _cc, set<string> _interests, int _priorityLevel)
+Student::Student(string _name, string _email, int _id, string _gradSem, int _gradYear, int _cc, string_interests)
 {
     name = _name;
     email = _email;
@@ -33,7 +32,6 @@ Student::Student(string _name, string _email, int _id, int _gradSem, int _gradYe
     gradYear = _gradYear;
     currentCC = _cc;
     interests = _interests;
-    priorityLevel = _priorityLevel;
     
     sendAutomaticEmail = false;
     sendInterestEmail = false;
@@ -57,11 +55,13 @@ void Student::setId(int id)
 
 void Student::setGradSem(string m)
 {
+    /*
     if(m.compare("Spring") == 0){
         gradSem = 2;
     }else if(m.compare("Fall") == 0){ //graduating in the Fall (0)
         gradSem = 1;
-    }
+    }*/
+    gradSem = m;
 }
 
 void Student::setGradYear(int y)
@@ -89,7 +89,7 @@ int Student::getId()
     return identity;
 }
 
-int Student::getGradSem()
+string Student::getGradSem()
 {
     return gradSem;
 }
@@ -106,36 +106,61 @@ set<string> Student::getInterests()
     return interests;
 }
 
+int Student::getPriorityLevel()
+{
+    return priorityLevel;
+}
+
 int Student::getStudentYrStatus()
 {
+    int gradSemNum;
+    if(gradSem.compare("Spring") == 0){
+	gradSemNum = 2; 
+    }else if(gradSem.compare("Fall") == 0){ //graduating in the Fall (0
+	gradSemNum = 1;    
+    }
+
+    time_t now = time(0); // current date/time based on current system
+    tm *ltm = localtime(&now);
+    int currentYear = 1900 + ltm->tm_year;
+    int currentMonth = 1 + ltm->tm_mon;
+
+    int currentSem;
+    if(currentMonth >= 1 && currentMonth <= 5){
+	currentSem = 2;
+    }else if(currentMonth >= 8 && currentMonth <= 12){
+	currentSem = 1;
+    }
+
     int yearsLeft = gradYear - currentYear;
     int semLeft = yearsLeft * 2;
 
-    if(gradSem != currentSem){
-        if((currentSem - gradSem) > 0){ //currentSem is Spring(2) and gradSem is Fall(1)
+    if(gradSemNum != currentSem){
+        if((currentSem - gradSemNum) > 0){ //currentSem is Spring(2) and gradSem is Fall(1)
             semLeft--;
-        }else if ((currentSem - gradSem) < 0){ //currentSem is Fall(1) and gradSem is Spring(2)
+        }else if ((currentSem - gradSemNum) < 0){ //currentSem is Fall(1) and gradSem is Spring(2)
             semLeft++;
         }
     }
     
+    int status = 0;
     if(semLeft == 7 || semLeft == 8){ //Freshman status
-        return 1;
+        status = 1;
         
     }else if(semLeft == 5 || semLeft == 6){ //Sophomore Satus
-        return 2;
+        status = 2;
         
     }else if(semLeft == 3 || semLeft == 4){ //Junior Status
-        return 3;
+        status = 3;
         
     }else if(semLeft <= 2){ //Senior Status
-        return 4;
+        status = 4;
     }
 
+    return status;
 }
 
-void Student::setPriorityLevel()
-{
+void Student::setPriorityLevel(){
     int yr = getStudentYrStatus();
     bool isHighPriority = false;
     bool isMedPriority = false;
@@ -180,18 +205,20 @@ void Student::setPriorityLevel()
         priorityLevel = 0;
         sendInterestEmail = true;
         sendAutomaticEmail = false;
-    } else{
+    } else if(isLowPriority){
         priorityLevel = -1;
+	sendInterestEmail = false;
+        sendAutomaticEmail = false;
     }
 }
 
 void Student::sendEmail(){
     if(sendAutomaticEmail){
-        new AutomaticEmail(); //Send email about all CC events regardless of interests
+        //new AutomaticEmail(); //Send email about all CC events regardless of interests
         
     }
     if(sendInterestEmail){
-        new InterestEmail(); //Send email about CC Events tailored to student's interests
+        //new InterestEmail(); //Send email about CC Events tailored to student's interests
         
     }
 }
