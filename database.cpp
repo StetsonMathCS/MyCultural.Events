@@ -150,7 +150,7 @@ int database::rowsInStudentTable ( )
 // checks if the tables is empty
 bool database::checkEmptyStudentTable ( )
 {
-	int c=rowsIntable();
+	int c=rowsInStudentTable();
 	if(c==0)
 		return true;
 
@@ -187,8 +187,7 @@ void database::searchStudentByName(string word )
     sqlite3_finalize(stmt);
 }
 
-	
-}
+
 
 // search students with the same email, " i mean its impossible :P "
 void database::searchStudentByEmail(string word )
@@ -252,7 +251,7 @@ void database::searchStudentByPreferences(string word )
 
 
 }
-void database::searchStudentByCurrentcc(int word )
+void database::searchStudentByCurrentcc(int curcc)
 {
     sqlite3_stmt *stmt;
     const char *pzTest;
@@ -261,7 +260,7 @@ void database::searchStudentByCurrentcc(int word )
     
     int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
     
-    if (sqlite3_bind_int(stmt, 1, cc) != SQLITE_OK) {
+    if (sqlite3_bind_int(stmt, 1, curcc) != SQLITE_OK) {
         return;
     }
     
@@ -316,7 +315,7 @@ void database::searchStudentByGradsemester(string word )
 }
 
 // search students with the same graduation year
-void database::searchStudentByGradyear(int word )
+void database::searchStudentByGradyear(int year)
 {
     sqlite3_stmt *stmt;
     const char *pzTest;
