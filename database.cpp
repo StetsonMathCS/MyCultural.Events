@@ -188,7 +188,7 @@ void database::searchStudentByName(string word )
 }
 
 	
-}
+//}
 
 // search students with the same email, " i mean its impossible :P "
 void database::searchStudentByEmail(string word )
@@ -346,9 +346,26 @@ void database::searchStudentByGradyear(int word )
 
 }
 
+// return is the table has values and how many
+int database::rowsInEventTable ()
+{
+	int count=0;
+	sqlite3_stmt * stmt;
+	sqlite3_prepare( db, "SELECT * from EventsTable;", -1, &stmt, NULL );//preparing the statement
+	sqlite3_step( stmt );//executing the statement
+
+	while( sqlite3_column_text( stmt, 0 ) )
+	{
+		count++;
+		sqlite3_step( stmt );
+	}
+	return count;
+
+}
 
 
-void database::searchByLoc(string word)
+
+void database::searchEventByLoc(string word)
 {
 	char *szErrMsg = 0;
 	string s="select * from EventsTable where location='"+word+"'";
@@ -367,7 +384,7 @@ void database::searchByLoc(string word)
 
 }
 
-void database::searchByDesc(string word)
+void database::searchEventByDesc(string word)
 {
 	char *szErrMsg = 0;
 	string s="select * from EventsTable where description='"+word+"'";
@@ -385,7 +402,7 @@ void database::searchByDesc(string word)
 
 }
 
-void database::searchById(int i)
+void database::searchEventById(int i)
 {
 	char *szErrMsg = 0;
         string s="select * from EventsTable where id=";
@@ -405,6 +422,7 @@ void database::searchById(int i)
         }
 
 }
+
 void database::toString()
 {
 	sqlite3_stmt *s;
