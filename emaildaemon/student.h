@@ -4,6 +4,7 @@
 #include <string>
 #include <set>
 
+#include "database.h"
 #include "automaticemail.h"
 #include "interestemail.h"
 
@@ -12,7 +13,7 @@ private:
     std::string name;
     std::string email;
     int identity;
-    int gradSem;
+    std::string gradSem;
     int gradYear;
     int currentCC;
     std::set<std::string> interests;
@@ -24,7 +25,7 @@ protected:
 
 public:
     Student();
-    Student(std::string nm, std::string email, int id, int sem, int year, int cc, std::set<std::string> interests, int pr);
+    //Student(std::string nm, std::string email, int id, std::string sem, int year, int cc, std::set<std::string> interests, int pr);
     
     void setName(std::string nm);
     void setEmail(std::string email);
@@ -37,12 +38,12 @@ public:
     std::string getName();
     std::string getEmail();
     int getId();
-    int getGradSem();
+    std::string getGradSem();
     int getGradYear();
     int getCurrentCC();
     std::set<std::string> getInterests();
     int getPriorityLevel();
-    
+ 
     int getStudentYrStatus();
     
     void sendEmail();
