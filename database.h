@@ -1,8 +1,11 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 #include "sqlite3.h"
+#include <vector>
 #include <string>
 
+class Student;
+class ccevent;
 class database 
 {
 	public:
@@ -23,7 +26,7 @@ class database
 //		void searchByDesc(std::string);
 		
 		void searchStudentByName(std::string);
-		void searchStudentByEmail(std::string);
+		std::vector<Student> searchStudentByEmail(std::string);
 		void searchStudentByPreferences(std::string);
 		void searchStudentByCurrentcc(int);
 		void searchStudentByGradsemester(std::string);
@@ -36,7 +39,7 @@ class database
 		int getCredits(int);
 		std::string getEmail(int);
 		std::string getPreferences(int);
-		void insertStudentData(int, std::string, std::string, int, std::string, int, std::string);
+		void insertStudentData(std::string, std::string, int, std::string, int, int, std::string);
 		void insertEventData(std::string, std::string, std::string, std::string);
 		
 		int rowsInEventTable();

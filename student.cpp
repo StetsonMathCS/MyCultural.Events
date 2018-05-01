@@ -1,6 +1,6 @@
 #include <iostream>
-#include "automaticemail.h"
-#include "interestemail.h"
+#include "emaildaemon/automaticemail.h"
+#include "emaildaemon/interestemail.h"
 #include "student.h"
 #include <ctime>
 
@@ -19,11 +19,11 @@ Student::Student() : interests()
     
     sendAutomaticEmail = false;
     sendInterestEmail = false;
-    
+   
 }
 
 
-Student::Student(string _name, string _email, int _id, string _gradSem, int _gradYear, int _cc, string_interests)
+Student::Student(string _name, string _email, int _id, string _gradSem, int _gradYear, int _cc, string _interests)
 {
     name = _name;
     email = _email;
@@ -100,7 +100,7 @@ int Student::getCurrentCC()
 {
     return currentCC;
 }
-set<string> Student::getInterests()
+string Student::getInterests()
 {
     return interests;
 }
