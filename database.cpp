@@ -365,44 +365,94 @@ int database::rowsInEventTable ()
 }
 
 
-
-void database::searchEventByLoc(string word)
+// search for events with the same name
+void database::searchEventByName(string word )
 {
-	char *szErrMsg = 0;
-	string s="select * from EventsTable where location='"+word+"'";
-//	sqlite3_stmt *stmt;
-	/* Execute SQL statement */
-	int rc = sqlite3_exec(db, s.c_str(), callback, NULL, &szErrMsg);
-
-	if( rc != SQLITE_OK ) {
-		cout<< "SQL error:"<<szErrMsg;
-		sqlite3_free(szErrMsg);
-	}
-	else
-	{
-
-	}
-
+    sqlite3_stmt *stmt;
+    const char *pzTest;
+    
+    string s = "select * from EventsTable where name=?";
+    
+    int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
+    
+    if (sqlite3_bind_text(stmt, 1, word.c_str(), -1, NULL) != SQLITE_OK) {
+        return;
+    }
+    
+    //Read each row
+    while ( (rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
+        cout << "Name = " << sqlite3_column_text(stmt, 1) << endl;
+        cout << "Date and Time = " << sqlite3_column_text(stmt, 2) << endl;
+        cout << "Location = " << sqlite3_column_text(stmt, 3) << endl;
+        cout << "Description = " << sqlite3_column_text(stmt, 4) << endl;
+        
+        cout << endl;
+    }
+    
+    sqlite3_finalize(stmt);
 }
 
-void database::searchEventByDesc(string word)
+
+
+// search for events with the same location
+void database::searchEventByLoc(string word )
 {
-	char *szErrMsg = 0;
-	string s="select * from EventsTable where description='"+word+"'";
-	/* Execute SQL statement */
-	int rc = sqlite3_exec(db, s.c_str(), callback, NULL, &szErrMsg);
-
-	if( rc != SQLITE_OK ) {
-		cout<< "SQL error:"<<szErrMsg;
-		sqlite3_free(szErrMsg);
-	}
-	else
-	{
-		//cout<< "Operation done successfully\n";
-	}
-
+    sqlite3_stmt *stmt;
+    const char *pzTest;
+    
+    string s = "select * from EventsTable where location=?";
+    
+    int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
+    
+    if (sqlite3_bind_text(stmt, 1, word.c_str(), -1, NULL) != SQLITE_OK) {
+        return;
+    }
+    
+    //Read each row
+    while ( (rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
+        cout << "Name = " << sqlite3_column_text(stmt, 1) << endl;
+        cout << "Date and Time = " << sqlite3_column_text(stmt, 2) << endl;
+        cout << "Location = " << sqlite3_column_text(stmt, 3) << endl;
+        cout << "Description = " << sqlite3_column_text(stmt, 4) << endl;
+        
+        cout << endl;
+    }
+    
+    sqlite3_finalize(stmt);
 }
 
+
+// search for events with the same description
+void database::searchEventByDesc(string word )
+{
+    sqlite3_stmt *stmt;
+    const char *pzTest;
+    
+    string s = "select * from EventsTable where description=?";
+    
+    int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
+    
+    if (sqlite3_bind_text(stmt, 1, word.c_str(), -1, NULL) != SQLITE_OK) {
+        return;
+    }
+    
+    //Read each row
+    while ( (rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
+        cout << "Name = " << sqlite3_column_text(stmt, 1) << endl;
+        cout << "Date and Time = " << sqlite3_column_text(stmt, 2) << endl;
+        cout << "Location = " << sqlite3_column_text(stmt, 3) << endl;
+        cout << "Description = " << sqlite3_column_text(stmt, 4) << endl;
+        
+        cout << endl;
+    }
+    
+    sqlite3_finalize(stmt);
+}
+
+/*
 void database::searchEventById(int i)
 {
 	char *szErrMsg = 0;
@@ -411,7 +461,7 @@ void database::searchEventById(int i)
 	ss << i;
 	s.append(ss.str());
 	
-        /* Execute SQL statement */
+ //      * Execute SQL statement *
         int rc = sqlite3_exec(db, s.c_str(), callback, NULL, &szErrMsg);
 
         if( rc != SQLITE_OK ) {
@@ -424,7 +474,7 @@ void database::searchEventById(int i)
         }
 
 }
-
+*/
 
 void database::toString()
 {
