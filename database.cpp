@@ -1,6 +1,8 @@
 //#define _GLIBCXX_USE_CXX11_ABI 0/1
-#include "database.h"
+#include "student.h"
+#include "ccevent.h"
 #include "sqlite3.h"
+#include <vector>
 #include <iostream>
 #include <cstring>
 #include <sstream>
@@ -81,7 +83,7 @@ int database::callback(void *NotUsed, int argc, char **argv, char **szColName)
 }
 
 
-void database::insertStudentData(int index, string name, string email, int currentCC, string gradSemester, int gradYear, string preferences)
+void database::insertStudentData(string name, string email, int id, string gradSemester, int gradYear, int currentCC, string preferences)
 {
 	
 	std::ostringstream ss;
@@ -135,6 +137,9 @@ int database::rowsInStudentTable ( )
 {
 	int count=0;
 	sqlite3_stmt * stmt;
+	sqlite3_prepare( db, "SELECT * from StudentsTable;", -1, &stmt, NULL );//preparing the statement
+	sqlite3_step( stmt );//executing the statement
+
 	sqlite3_prepare( db, "SELECT * from StudentsTable;", -1, &stmt, NULL );//preparing the statement
 	sqlite3_step( stmt );//executing the statement
 
@@ -216,8 +221,9 @@ void database::searchStudentByName(string word )
 
 
 // search students with the same email, " i mean its impossible :P "
-void database::searchStudentByEmail(string word )
+vector<Student> database::searchStudentByEmail(string word )
 {
+    vector<Student> v;
     sqlite3_stmt *stmt;
     const char *pzTest;
     
@@ -226,9 +232,15 @@ void database::searchStudentByEmail(string word )
     int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
     
     if (sqlite3_bind_text(stmt, 1, word.c_str(), -1, NULL) != SQLITE_OK) {
-        return;
+        
     }
     
+	string tempName(const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1))));
+	string tempEmail(const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2))));
+	string tempSemester(const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4))));
+	string tempPrefs(const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 6))));
+	Student stud(tempName,tempEmail, sqlite3_column_int(stmt, 0),tempSemester, sqlite3_column_int(stmt, 5), sqlite3_column_int(stmt, 3), tempPrefs);
+	v.push_back(stud);
     //Read each row
     while ( (rc = sqlite3_step(stmt)) == SQLITE_ROW) {
         cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
@@ -241,8 +253,8 @@ void database::searchStudentByEmail(string word )
         
         cout << endl;
     }
-    
     sqlite3_finalize(stmt);
+	return v;
 
 
 }
@@ -377,15 +389,15 @@ void database::searchStudentByGradyear(int year)
 //search by event name
 void database::searchByEventName(string word)
 {
-    sqlite3_stmt *stmt;
+	 sqlite3_stmt *stmt;
     const char *pzTest;
-    
+
     string s = "select * from EventTable where name=?";
-    
+
     int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
     
     if (sqlite3_bind_text(stmt, 1, word.c_str(), -1, NULL) != SQLITE_OK) {
-        return;
+      return;
     }
     
     //Read each row

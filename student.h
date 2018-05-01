@@ -5,8 +5,8 @@
 #include <set>
 
 #include "database.h"
-#include "automaticemail.h"
-#include "interestemail.h"
+#include "emaildaemon/automaticemail.h"
+#include "emaildaemon/interestemail.h"
 
 class Student {
 private:
@@ -41,7 +41,7 @@ public:
     std::string getGradSem();
     int getGradYear();
     int getCurrentCC();
-    std::set<std::string> getInterests();
+    std::string getInterests();
     int getPriorityLevel();
  
     int getStudentYrStatus();
