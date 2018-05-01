@@ -41,16 +41,21 @@ int main()
 		//cout << RED << "link: " << NC << link << endl;
 		//cout << RED << "guid: " << NC << guid << endl;
 		//cout << endl << endl;
-		
-
+		/*
+		for (int i = 1; i <= rowsInEventTable(); i++)
+		{
+			
+		}
 		//test.insertEventData(title, pubdate, "no location", description);
+		*/
 	}
 	
-		
-	for (int i = 1; i <= 30; i++)
+			
+	for (int i = 1; i <= db.rowsInEventsTable(); i++)
 	{
-		db.searchById(i);
+		db.searchEventById(i);
 	}
+	
 	//test.searchByName("Global Perspectives on Economic Development");
 	//cout << "data inserted" << endl;
 }
