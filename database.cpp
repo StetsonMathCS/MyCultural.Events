@@ -147,6 +147,33 @@ int database::rowsInStudentTable ( )
 
 }
 
+// return is the table has values and how many
+int database::rowsInEventsTable()
+{
+	int count=0;
+	sqlite3_stmt * stmt;
+	sqlite3_prepare( db, "SELECT * from EventsTable;", -1, &stmt, NULL );//preparing the statement
+	sqlite3_step( stmt );//executing the statement
+
+	while( sqlite3_column_text( stmt, 0 ) )
+	{
+		count++;
+		sqlite3_step( stmt );
+	}
+	return count;
+
+}
+
+//Check if the table is empty
+bool database::checkEmptyEventsTable()
+{
+	int c=rowsInEventsTable();
+	if(c==0)
+		return true;
+
+	return false;
+}
+
 // checks if the tables is empty
 bool database::checkEmptyStudentTable ( )
 {
@@ -347,26 +374,9 @@ void database::searchStudentByGradyear(int year)
 
 }
 
-// return is the table has values and how many
-int database::rowsInEventTable ()
-{
-	int count=0;
-	sqlite3_stmt * stmt;
-	sqlite3_prepare( db, "SELECT * from EventsTable;", -1, &stmt, NULL );//preparing the statement
-	sqlite3_step( stmt );//executing the statement
 
-	while( sqlite3_column_text( stmt, 0 ) )
-	{
-		count++;
-		sqlite3_step( stmt );
-	}
-	return count;
-
-}
-
-
-// search for events with the same name
-void database::searchEventByName(string word )
+//search by event name
+void database::searchByEventName(string word)
 {
     sqlite3_stmt *stmt;
     const char *pzTest;
@@ -393,10 +403,8 @@ void database::searchEventByName(string word )
     sqlite3_finalize(stmt);
 }
 
-
-
-// search for events with the same location
-void database::searchEventByLoc(string word )
+//search by event location
+void database::searchByEventLoc(string word)
 {
     sqlite3_stmt *stmt;
     const char *pzTest;
@@ -423,9 +431,8 @@ void database::searchEventByLoc(string word )
     sqlite3_finalize(stmt);
 }
 
-
-// search for events with the same description
-void database::searchEventByDesc(string word )
+//search by description
+void database::searchByEventDesc(string word)
 {
     sqlite3_stmt *stmt;
     const char *pzTest;
@@ -451,6 +458,8 @@ void database::searchEventByDesc(string word )
     
     sqlite3_finalize(stmt);
 }
+    
+    
 
 /*
 void database::searchEventById(int i)

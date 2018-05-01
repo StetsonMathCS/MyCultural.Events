@@ -15,9 +15,9 @@ class database
 		
 		void toString();
 //		void searchEventById(int);
-		void searchEventByName(std::string);
-		void searchEventByLoc(std::string);	
-		void searchEventByDesc(std::string);
+		void searchByEventName(std::string);
+		void searchByEventLoc(std::string);	
+		void searchByEventDesc(std::string);
 		
 //		void searchByName(std::string);
 //		void searchByDesc(std::string);
@@ -43,6 +43,8 @@ class database
 		
 		int rowsInStudentTable();
 		bool checkEmptyStudentTable();
+
+		bool checkEmptyEventsTable();
 
 	private:
 		sqlite3* db;
