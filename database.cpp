@@ -54,7 +54,7 @@ int database::createTables()
 		sqlite3_free(errmsg);
 	}
 	
-	retval = sqlite3_exec(db,"CREATE TABLE IF NOT EXISTS EventsTable (" \
+	retval = sqlite3_exec(db,"CREATE TABLE IF NOT EXISTS EventTable (" \
 			     "id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," \
 			     "name	TEXT NOT NULL," \
 			     "date_and_time	TEXT NOT NULL," \
@@ -111,7 +111,7 @@ void database::insertEventData(string name,string time,string loc,string desc)
 {
 	std::ostringstream ss;
 //	ss << id;
-	string query="INSERT INTO EventsTable(name, date_and_time, location, description) VALUES (";
+	string query="INSERT INTO EventTable(name, date_and_time, location, description) VALUES (";
 //	query.append(ss.str());
 	query.append("'"+name+"','");
 	query.append(time+"','");
@@ -148,11 +148,11 @@ int database::rowsInStudentTable ( )
 }
 
 // return is the table has values and how many
-int database::rowsInEventsTable()
+int database::rowsInEventTable()
 {
 	int count=0;
 	sqlite3_stmt * stmt;
-	sqlite3_prepare( db, "SELECT * from EventsTable;", -1, &stmt, NULL );//preparing the statement
+	sqlite3_prepare( db, "SELECT * from EventTable;", -1, &stmt, NULL );//preparing the statement
 	sqlite3_step( stmt );//executing the statement
 
 	while( sqlite3_column_text( stmt, 0 ) )
@@ -165,9 +165,9 @@ int database::rowsInEventsTable()
 }
 
 //Check if the table is empty
-bool database::checkEmptyEventsTable()
+bool database::checkEmptyEventTable()
 {
-	int c=rowsInEventsTable();
+	int c=rowsInEventTable();
 	if(c==0)
 		return true;
 
@@ -380,7 +380,7 @@ void database::searchByEventName(string word)
     sqlite3_stmt *stmt;
     const char *pzTest;
     
-    string s = "select * from EventsTable where name=?";
+    string s = "select * from EventTable where name=?";
     
     int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
     
@@ -408,7 +408,7 @@ void database::searchByEventLoc(string word)
     sqlite3_stmt *stmt;
     const char *pzTest;
     
-    string s = "select * from EventsTable where location=?";
+    string s = "select * from EventTable where location=?";
     
     int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
     
@@ -436,7 +436,7 @@ void database::searchByEventDesc(string word)
     sqlite3_stmt *stmt;
     const char *pzTest;
     
-    string s = "select * from EventsTable where description=?";
+    string s = "select * from EventTable where description=?";
     
     int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
     
@@ -464,7 +464,7 @@ void database::searchByEventDesc(string word)
 void database::searchEventById(int i)
 {
 	char *szErrMsg = 0;
-        string s="select * from EventsTable where id=";
+        string s="select * from EventTable where id=";
 	std::ostringstream ss;
 	ss << i;
 	s.append(ss.str());

@@ -44,7 +44,7 @@ class database
 		int rowsInStudentTable();
 		bool checkEmptyStudentTable();
 
-		bool checkEmptyEventsTable();
+		bool checkEmptyEventTable();
 
 	private:
 		sqlite3* db;
