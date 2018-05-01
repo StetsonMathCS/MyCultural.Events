@@ -21,7 +21,7 @@ ccevent.o: ccevent.cpp database.h
 databaseTest.o: databaseTest.cpp database.h student.h ccevent.h
 	g++ -Wall -c databaseTest.cpp database.cpp student.cpp ccevent.cpp
 
-databaseTest: databaseTest.o database.o student.o ccevent.o
+databaseTest: databaseTest.o database.o student.o ccevent.o sqlite3.o
 	g++ -pthread -o databaseTest databaseTest.o student.o ccevent.o sqlite3.o database.o -ldl
 # Use this syntax to compile main that use database, order matters at least for some of it
 # g++ -pthread -o main main.o sqlite3.o database.o -ldl 
@@ -30,6 +30,6 @@ database.o: database.h sqlite3.h database.cpp student.h ccevent.h
 	g++ -c database.cpp
 
 # Use gcc to compile this C code
-sqtlite3.o: sqlite3.h sqlite3.c
+sqlite3.o: sqlite3.h sqlite3.c
 	gcc -c sqlite3.c
 
