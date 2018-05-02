@@ -16,7 +16,7 @@ private:
 
 public:
 	CCEvent();
-	CCEvent(int _id, std::string _title, std::string _dateTime, std::string _location,  std::string _description);
+	CCEvent(int _id, std::string _title, std::string _location, std::string _dateTime, std::string _description);
 	void setId(int i);
 	void setTitle(std::string t);
 	void setLocation(std::string loc);
