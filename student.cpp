@@ -222,5 +222,3 @@ void Student::sendEmail(){
     }
 }
 
-
-
