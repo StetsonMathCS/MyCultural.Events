@@ -11,12 +11,11 @@ test.o: test.cpp ../ccevent.h ../database.h ../student.h
 ../ccevent.o: ../ccevent.h ../ccevent.cpp
 	cd .. && $(CXX) -c ccevent.cpp
 
-../database.o: ../database.h ../database.cpp
-	cd .. && $(CXX) -c database.cpp
+../database.o: ../database.h ../database.cpp ../student.h
+	cd .. && $(CXX) -c database.cpp student.cpp
 
 ../student.o: ../student.h ../student.cpp
 	cd .. && $(CXX) -c student.cpp                                                  
-
 
 
 .PHONY: clean

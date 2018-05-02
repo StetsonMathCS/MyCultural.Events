@@ -44,6 +44,8 @@ int main(int argc, const char **argv){
 	cout << numStudentRows << endl;
 
 	
+int main(int argc, const char **argv)
+{
 
 	for(int i = 0; i < 2; i++){
 		vector<Student> stvec = db.searchStudentById(i);	
@@ -71,6 +73,7 @@ int main(int argc, const char **argv){
 	cout << "Location: " << e.getLocation() << endl;
 	cout << "Date/Time: " << e.getDateTime() << endl;
 	cout << "Description: " << e.getDescription() << endl;
+<<<<<<< HEAD
 */
 /*
 	//database db;
@@ -79,5 +82,13 @@ int main(int argc, const char **argv){
 		cout << "CCEvent: " << db.getName(i) << endl;
 	}
 */	
+	if(argc != 2) {
+                cout << "Usage: " << argv[0] << " databasename.db" << endl;
+                return -1;
+        }
+	database db(argv[1]);
+	vector<Student> v;
+	v = db.searchStudentByName("kyle");
+	cout << v[0].getName() << endl;
 	return 0;
 }
