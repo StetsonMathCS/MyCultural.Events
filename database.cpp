@@ -83,7 +83,7 @@ int database::callback(void *NotUsed, int argc, char **argv, char **szColName)
 }
 
 
-void database::insertStudentData(string name, string email, int id, string gradSemester, int gradYear, int currentCC, string preferences)
+void database::insertStudentData(string name, string email, int currentCC , string gradSemester, int gradYear, string preferences)
 {
 
 	std::ostringstream ss;
@@ -199,11 +199,12 @@ vector<Student> database::searchStudentById ( int id )
     sqlite3_stmt *stmt;
     const char *pzTest;
     
-    string s = "select * from StudentsTable where id=?";
-    
+    string s = "select * from StudentsTable where index=?";
+   
+    string tempI = (const_cast<char*>(reinterpret_cast<const char*>(id))); 
     int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
     cout << "Debug point 1" << endl;
-    if (sqlite3_bind_int(stmt, 1, id) != SQLITE_OK) {
+    if (sqlite3_bind_text(stmt, 1, tempI.c_str(), -1, NULL) != SQLITE_OK) {
        cout << "did not work" << endl;
     }
     //Read each row
@@ -408,11 +409,13 @@ vector<Student> database::searchStudentByCurrentcc(int cc)
     
     string s = "select * from StudentsTable where currentCC=?";
     
+   string tempI = (const_cast<char*>(reinterpret_cast<const char*>(cc)));
     int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
     cout << "Debug point 1" << endl;
-    if (sqlite3_bind_int(stmt, 1, cc) != SQLITE_OK) {
+    if (sqlite3_bind_text(stmt, 1, tempI.c_str(), -1, NULL) != SQLITE_OK) {
        cout << "did not work" << endl;
     }
+
     //Read each row
 	string tempName;
 	string tempEmail;
@@ -509,9 +512,10 @@ vector<Student> database::searchStudentByGradyear(int year)
     
     string s = "select * from StudentsTable where gradYear=?";
     
+    string tempI = (const_cast<char*>(reinterpret_cast<const char*>(year)));
     int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
     cout << "Debug point 1" << endl;
-    if (sqlite3_bind_int(stmt, 1, year) != SQLITE_OK) {
+    if (sqlite3_bind_text(stmt, 1, tempI.c_str(), -1, NULL) != SQLITE_OK) {
        cout << "did not work" << endl;
     }
     //Read each row
