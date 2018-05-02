@@ -36,7 +36,6 @@ int main(int argc, const char **argv){
 		return -1;
 	}
 	database db(argv[1]);
-	
 	//db.insertStudentData("Heyley", "hgatewood@stetson.edu", 2020, "Fall", 10, "art");
 	//db.insertStudentData("John", "johndoe@stetson.edu", 2019, "Fall", 8, "music, film");
 
@@ -44,9 +43,6 @@ int main(int argc, const char **argv){
 	cout << numStudentRows << endl;
 
 	
-int main(int argc, const char **argv)
-{
-
 	for(int i = 0; i < 2; i++){
 		vector<Student> stvec = db.searchStudentById(i);	
 		Student st = stvec[0];
@@ -82,13 +78,13 @@ int main(int argc, const char **argv)
 		cout << "CCEvent: " << db.getName(i) << endl;
 	}
 */	
-	if(argc != 2) {
+/*	if(argc != 2) {
                 cout << "Usage: " << argv[0] << " databasename.db" << endl;
                 return -1;
         }
 	database db(argv[1]);
 	vector<Student> v;
 	v = db.searchStudentByName("kyle");
-	cout << v[0].getName() << endl;
+	cout << v[0].getName() << endl;*/
 	return 0;
 }
