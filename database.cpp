@@ -8,10 +8,11 @@
 #include <sstream>
 using namespace std;
 
-database::database()
+//takes string filePath which is the path to the MyCultural.db in MyCultural.Events, including trailing slash. I.E: "MyCultural.Events/"
+database::database(const char* filePath)
 {
 	int retval = 0;
-	retval = sqlite3_open("MyCultural.db", &db);
+	retval = sqlite3_open(filePath, &db);
 	if (retval != SQLITE_OK)
 	{
 		cout << "Cannot open MyCultural.db: " << sqlite3_errcode(db) << endl;

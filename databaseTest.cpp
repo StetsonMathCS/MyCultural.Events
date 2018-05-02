@@ -5,9 +5,13 @@
 #include "database.h"
 using namespace std;
 
-int main()
+int main(int argc, const char **argv)
 {
-        database db;
+	if(argc != 2) {
+		cout << "Usage: " << argv[0] << " databasename.db" << endl;
+		return -1;
+	}
+        database db(argv[1]);
         db.insertStudentData("kyle", "email@email.com", 15, "Fall", 2018, "Music");
         db.insertEventData("Lunch", "12:00", "the commons", "A nice meal");
         db.insertEventData("Dinner", "6:00", "the commons", "A bigger meal");

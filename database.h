@@ -9,9 +9,9 @@ class CCEvent;
 class database 
 {
 	public:
-		database();
+		//database();
 		~database();
-		//database(const char*);
+		database(const char*);
 		int createTables();	
 		int getID(std::string);
 		std::string getName(int);
