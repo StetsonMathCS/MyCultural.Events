@@ -30,6 +30,7 @@
 #include "cgicc/CgiDefs.h"
 #include "cgicc/Cgicc.h"
 #include "cgicc/HTTPHTMLHeader.h"
+#include "cgicc/HTTPRedirectHeader.h"
 #include "cgicc/HTMLClasses.h"
 #include "../database.h"
 
@@ -46,7 +47,6 @@
 
 using namespace std;
 using namespace cgicc;
-
 // Function prototypes
 void dumpEnvironment(const CgiEnvironment& env);
 void dumpList(const Cgicc& formData);
@@ -235,8 +235,8 @@ bool checkSem(const Cgicc& cgi){
 		return false;
 	}
 */
-int main(int /*argc*/, 
-		char ** /*argv*/)
+int main(int argc, 
+		const char **argv)
 {
 	try {
 #if HAVE_GETTIMEOFDAY
@@ -332,16 +332,16 @@ int main(int /*argc*/,
 		cout << cgicc::div() << endl;
 		cout << body() << html() << endl;
 
-			if (checkSem(cgi)&&checkName(cgi)&&checkCredits(cgi)&&checkDate(cgi)&&checkEvents(cgi)){ 
-				
+			if (checkSem(cgi)&&checkName(cgi)&&checkCredits(cgi)&&checkDate(cgi)&&checkEvents(cgi)){ 	
 			const_form_iterator name = cgi.getElement("name");
 			const_form_iterator mail = cgi.getElement("email");
 			const_form_iterator year = cgi.getElement("years");
 			const_form_iterator semesters = cgi.getElement("semesters");
 			const_form_iterator credit = cgi.getElement("credits");
 			const_form_iterator tags = cgi.getElement("events");
-			database db;
+			database db(argv[1]);
 			db.insertStudentData(name->getStrippedValue(),mail->getStrippedValue(),credit->getIntegerValue(), semesters->getStrippedValue(), year->getIntegerValue(), tags->getStrippedValue());
+			showForm(cgi);
 		}
 	
 
@@ -488,5 +488,5 @@ showForm(const Cgicc& formData)
 	cout << "<font size=\"+5\">Thank You!</font>"; 	
 	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Your information was stored successfully!</small>";
 	cout << "</div>";
-
+	cout << "<META HTTP-EQUIV=refresh CONTENT=\"1;URL=http://mycultural.events/thanks.txt\">\n";	
 }
