@@ -2,14 +2,19 @@
 #define AUTOMATICEMAIL_H
 
 #include <string>
+//#include "student.h"
+//#include "ccevent.h"
 
 class AutomaticEmail {
 private:
 
+    Student student;
+    CCEvent event;
+
 public:
     AutomaticEmail();
     
-    void setStudentInfo();
+    void setInfo(Student st, CCEvent e);
     
     void sendEmail(); //possible parameters: (Student st, CCEvent event)
     

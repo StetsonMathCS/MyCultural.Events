@@ -1,6 +1,6 @@
 #include <iostream>
-#include "emaildaemon/automaticemail.h"
-#include "emaildaemon/interestemail.h"
+//#include "emaildaemon/automaticemail.h"
+//#include "emaildaemon/interestemail.h"
 #include "student.h"
 #include <ctime>
 
