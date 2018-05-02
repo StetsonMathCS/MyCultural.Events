@@ -1,6 +1,7 @@
 #include "pugixml.hpp"
 #include <iostream>
 #include "../database.h"
+#include "../ccevent.h"
 
 using namespace std;
 
@@ -42,20 +43,31 @@ int main()
 		//cout << RED << "guid: " << NC << guid << endl;
 		//cout << endl << endl;
 		/*
-		for (int i = 1; i <= rowsInEventTable(); i++)
+		bool hasEvent = false;
+		for (int i = 1; i <= db.rowsInEventTable(); i++)
 		{
-			
+			vector<CCEvent> vector = db.searchEventById(i);
+			if (vector.size() != 0)
+			{
+				CCEvent event = vector[0];
+				if (title == event.getTitle())
+				{
+					hasEvent = true;
+				}
+			}	
 		}
-		//test.insertEventData(title, pubdate, "no location", description);
+		if (hasEvent == false)
+		{
+			db.insertEventData(title, pubdate, "no location", description);
+		}
 		*/
 	}
 	
 			
-	for (int i = 1; i <= db.rowsInEventsTable(); i++)
+	for (int i = 1; i <= db.rowsInEventTable(); i++)
 	{
 		db.searchEventById(i);
+		cout << i << endl;
 	}
-	
-	//test.searchByName("Global Perspectives on Economic Development");
-	//cout << "data inserted" << endl;
+	cout << db.rowsInEventTable() << " rows" << endl;
 }
