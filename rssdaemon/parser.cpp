@@ -6,14 +6,19 @@
 
 using namespace std;
 
-int main()
+int main(int argc, const char **argv)
 {
 	system("curl -o feed.rss https://www.stetson.edu/programs/calendar/rss/cultural-credits.rss");
 	pugi::xml_document RSSfeed;
 	RSSfeed.load_file("feed.rss");
-	//RSSfeed.load_file("cultural-credits.rss");
 	pugi::xml_node root = RSSfeed.child("rss").child("channel");
-	database db;
+
+	if (argc !=2)
+	{
+		cout << "Usage: " << argv[0] << " databasename.db" << endl;
+		return -1;
+	}
+	database db(argv[1]);
 	
 	const string NC = "\e[0m";
 	const string BOLD = "\e[1m";
@@ -67,11 +72,5 @@ int main()
 		{
 			db.insertEventData(title, pubdate, location, description);
 		}
-	}
-	
-	cout << endl << endl << endl;
-	for (int i = 1; i <= db.rowsInEventTable(); i++)
-	{
-		db.searchEventById(i);
 	}
 }
