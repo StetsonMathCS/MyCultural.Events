@@ -18,10 +18,24 @@ using namespace std;
  * 	8.) get template from Michael
  * 	9.) send to Nick and Isabel
  */
+/*
+void find_and_replace(std::string& file_contents,const std::string& morn, const std::string& night) {
+	auto pos = file_contents.find(morn);
+	while (pos != std::string::npos) {
+		file_contents.replace(pos, morn.length(), night);
+		pos = file_contents.find(morn, pos);
+	}
 
+}
+*/
 
-int main(){
-	database db;
+int main(int argc, const char **argv){
+	if (argc !=2)
+	{
+		cout << "usage: " << argv[0] << " databasename.db" << endl;
+		return -1;
+	}
+	database db(argv[1]);
 	
 	//db.insertStudentData("Heyley", "hgatewood@stetson.edu", 2020, "Fall", 10, "art");
 	//db.insertStudentData("John", "johndoe@stetson.edu", 2019, "Fall", 8, "music, film");
