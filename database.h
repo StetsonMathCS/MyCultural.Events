@@ -25,6 +25,7 @@ class database
 //		void searchByName(std::string);
 //		void searchByDesc(std::string);
 		
+		std::vector<Student> searchStudentById(int);
 		std::vector<Student> searchStudentByName(std::string);
 		std::vector<Student> searchStudentByEmail(std::string);
 		std::vector<Student> searchStudentByPreferences(std::string);
