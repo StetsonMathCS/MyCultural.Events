@@ -224,26 +224,11 @@ vector<Student> database::searchStudentById ( int id )
 		tempId = sqlite3_column_int(stmt, 0);
 		tempCC = sqlite3_column_int(stmt, 3);
 		tempYear = sqlite3_column_int(stmt, 5);
-
-		cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
-		cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
-		cout << "email = " << sqlite3_column_text(stmt, 2) << endl;
-		cout << "currentCC = " << sqlite3_column_int(stmt, 3) << endl;
-		cout << "gradSemester = " << sqlite3_column_text(stmt, 4) << endl;
-		cout << "gradYear = " << sqlite3_column_int(stmt, 5) << endl;
-		cout << "preferences = " << sqlite3_column_text(stmt, 6) << endl;
-		cout << "IN WHILE LOOP" << endl;
-		cout << endl;
 	}
 
 	Student stud(tempName,tempEmail, tempId , tempSemester, tempYear, tempCC, tempPrefs);
-	cout << "Debug point 8 " << endl;
-
 	v.push_back(stud);
-	cout << "Debug point 9 " << endl;
-
 	sqlite3_finalize(stmt);
-	cout << "returning" << endl;
 	return v;
 
 
@@ -260,7 +245,6 @@ vector<Student> database::searchStudentByName(string word )
 	string s = "select * from StudentsTable where name=?";
 
 	int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
-	cout << "Debug point 1" << endl;
 	if (sqlite3_bind_text(stmt, 1, word.c_str(), -1, NULL) != SQLITE_OK) {
 		cout << "did not work" << endl;
 	}
@@ -280,15 +264,6 @@ vector<Student> database::searchStudentByName(string word )
 		tempId = sqlite3_column_int(stmt, 0);
 		tempCC = sqlite3_column_int(stmt, 3);
 		tempYear = sqlite3_column_int(stmt, 5);
-		cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
-		cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
-		cout << "email = " << sqlite3_column_text(stmt, 2) << endl;
-		cout << "currentCC = " << sqlite3_column_int(stmt, 3) << endl;
-		cout << "gradSemester = " << sqlite3_column_text(stmt, 4) << endl;
-		cout << "gradYear = " << sqlite3_column_int(stmt, 5) << endl;
-		cout << "preferences = " << sqlite3_column_text(stmt, 6) << endl;
-		cout << "IN WHILE LOOP" << endl;
-		cout << endl;
 	}
 	//string tempName = string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
 	// string tempEmail(const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2))));
@@ -297,7 +272,6 @@ vector<Student> database::searchStudentByName(string word )
 	Student stud(tempName,tempEmail, tempId , tempSemester, tempYear, tempCC, tempPrefs);
 	v.push_back(stud);
 	sqlite3_finalize(stmt);
-	cout << "returning" << endl;
 	return v;
 
 }
@@ -313,7 +287,6 @@ vector<Student> database::searchStudentByEmail(string word )
 	string s = "select * from StudentsTable where email=?";
 
 	int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
-	cout << "Debug point 1" << endl;
 	if (sqlite3_bind_text(stmt, 1, word.c_str(), -1, NULL) != SQLITE_OK) {
 		cout << "did not work" << endl;
 	}
@@ -333,15 +306,6 @@ vector<Student> database::searchStudentByEmail(string word )
 		tempId = sqlite3_column_int(stmt, 0);
 		tempCC = sqlite3_column_int(stmt, 3);
 		tempYear = sqlite3_column_int(stmt, 5);
-		cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
-		cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
-		cout << "email = " << sqlite3_column_text(stmt, 2) << endl;
-		cout << "currentCC = " << sqlite3_column_int(stmt, 3) << endl;
-		cout << "gradSemester = " << sqlite3_column_text(stmt, 4) << endl;
-		cout << "gradYear = " << sqlite3_column_int(stmt, 5) << endl;
-		cout << "preferences = " << sqlite3_column_text(stmt, 6) << endl;
-		cout << "IN WHILE LOOP" << endl;
-		cout << endl;
 	}
 	//string tempName = string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
 	// string tempEmail(const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2))));
@@ -350,7 +314,6 @@ vector<Student> database::searchStudentByEmail(string word )
 	Student stud(tempName,tempEmail, tempId , tempSemester, tempYear, tempCC, tempPrefs);
 	v.push_back(stud);
 	sqlite3_finalize(stmt);
-	cout << "returning" << endl;
 	return v;
 
 
@@ -365,7 +328,6 @@ vector<Student> database::searchStudentByPreferences(string word )
 	string s = "select * from StudentsTable where preferences=?";
 
 	int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
-	cout << "Debug point 1" << endl;
 	if (sqlite3_bind_text(stmt, 1, word.c_str(), -1, NULL) != SQLITE_OK) {
 		cout << "did not work" << endl;
 	}
@@ -385,15 +347,6 @@ vector<Student> database::searchStudentByPreferences(string word )
 		tempId = sqlite3_column_int(stmt, 0);
 		tempCC = sqlite3_column_int(stmt, 3);
 		tempYear = sqlite3_column_int(stmt, 5);
-		cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
-		cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
-		cout << "email = " << sqlite3_column_text(stmt, 2) << endl;
-		cout << "currentCC = " << sqlite3_column_int(stmt, 3) << endl;
-		cout << "gradSemester = " << sqlite3_column_text(stmt, 4) << endl;
-		cout << "gradYear = " << sqlite3_column_int(stmt, 5) << endl;
-		cout << "preferences = " << sqlite3_column_text(stmt, 6) << endl;
-		cout << "IN WHILE LOOP" << endl;
-		cout << endl;
 	}
 	//string tempName = string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
 	// string tempEmail(const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2))));
@@ -402,7 +355,6 @@ vector<Student> database::searchStudentByPreferences(string word )
 	Student stud(tempName,tempEmail, tempId , tempSemester, tempYear, tempCC, tempPrefs);
 	v.push_back(stud);
 	sqlite3_finalize(stmt);
-	cout << "returning" << endl;
 	return v;
 
 }
@@ -419,7 +371,6 @@ vector<Student> database::searchStudentByCurrentcc(int cc)
 	string tempI = out.str();
 
 	int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
-	cout << "Debug point 1" << endl;
 	if (sqlite3_bind_text(stmt, 1, tempI.c_str(), -1, NULL) != SQLITE_OK) {
 		cout << "did not work" << endl;
 	}
@@ -440,21 +391,11 @@ vector<Student> database::searchStudentByCurrentcc(int cc)
 		tempId = sqlite3_column_int(stmt, 0);
 		tempCC = sqlite3_column_int(stmt, 3);
 		tempYear = sqlite3_column_int(stmt, 5);
-		cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
-		cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
-		cout << "email = " << sqlite3_column_text(stmt, 2) << endl;
-		cout << "currentCC = " << sqlite3_column_int(stmt, 3) << endl;
-		cout << "gradSemester = " << sqlite3_column_text(stmt, 4) << endl;
-		cout << "gradYear = " << sqlite3_column_int(stmt, 5) << endl;
-		cout << "preferences = " << sqlite3_column_text(stmt, 6) << endl;
-		cout << "IN WHILE LOOP" << endl;
-		cout << endl;
 	}
 
 	Student stud(tempName,tempEmail, tempId , tempSemester, tempYear, tempCC, tempPrefs);
 	v.push_back(stud);
 	sqlite3_finalize(stmt);
-	cout << "returning" << endl;
 	return v;
 
 }
@@ -469,7 +410,6 @@ vector<Student> database::searchStudentByGradsemester(string word )
 	string s = "select * from StudentsTable where gradSemester=?";
 
 	int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
-	cout << "Debug point 1" << endl;
 	if (sqlite3_bind_text(stmt, 1, word.c_str(), -1, NULL) != SQLITE_OK) {
 		cout << "did not work" << endl;
 	}
@@ -489,15 +429,6 @@ vector<Student> database::searchStudentByGradsemester(string word )
 		tempId = sqlite3_column_int(stmt, 0);
 		tempCC = sqlite3_column_int(stmt, 3);
 		tempYear = sqlite3_column_int(stmt, 5);
-		cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
-		cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
-		cout << "email = " << sqlite3_column_text(stmt, 2) << endl;
-		cout << "currentCC = " << sqlite3_column_int(stmt, 3) << endl;
-		cout << "gradSemester = " << sqlite3_column_text(stmt, 4) << endl;
-		cout << "gradYear = " << sqlite3_column_int(stmt, 5) << endl;
-		cout << "preferences = " << sqlite3_column_text(stmt, 6) << endl;
-		cout << "IN WHILE LOOP" << endl;
-		cout << endl;
 	}
 	//string tempName = string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
 	// string tempEmail(const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2))));
@@ -506,7 +437,6 @@ vector<Student> database::searchStudentByGradsemester(string word )
 	Student stud(tempName,tempEmail, tempId , tempSemester, tempYear, tempCC, tempPrefs);
 	v.push_back(stud);
 	sqlite3_finalize(stmt);
-	cout << "returning" << endl;
 	return v;
 
 }
@@ -524,7 +454,6 @@ vector<Student> database::searchStudentByGradyear(int year)
 	string tempI = out.str();
 
 	int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
-	cout << "Debug point 1" << endl;
 	if (sqlite3_bind_text(stmt, 1, tempI.c_str(), -1, NULL) != SQLITE_OK) {
 		cout << "did not work" << endl;
 	}
@@ -544,21 +473,11 @@ vector<Student> database::searchStudentByGradyear(int year)
 		tempId = sqlite3_column_int(stmt, 0);
 		tempCC = sqlite3_column_int(stmt, 3);
 		tempYear = sqlite3_column_int(stmt, 5);
-		cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
-		cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
-		cout << "email = " << sqlite3_column_text(stmt, 2) << endl;
-		cout << "currentCC = " << sqlite3_column_int(stmt, 3) << endl;
-		cout << "gradSemester = " << sqlite3_column_text(stmt, 4) << endl;
-		cout << "gradYear = " << sqlite3_column_int(stmt, 5) << endl;
-		cout << "preferences = " << sqlite3_column_text(stmt, 6) << endl;
-		cout << "IN WHILE LOOP" << endl;
-		cout << endl;
 	}
 
 	Student stud(tempName,tempEmail, tempId , tempSemester, tempYear, tempCC, tempPrefs);
 	v.push_back(stud);
 	sqlite3_finalize(stmt);
-	cout << "returning" << endl;
 	return v;
 
 }
@@ -574,7 +493,6 @@ vector<CCEvent> database::searchEventByName(string word)
 	string s = "select * from EventTable where name=?";
 
 	int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
-	cout << "Debug point 1" << endl;
 	if (sqlite3_bind_text(stmt, 1, word.c_str(), -1, NULL) != SQLITE_OK) {
 		cout << "did not work" << endl;
 	}
@@ -605,7 +523,6 @@ vector<CCEvent> database::searchEventByName(string word)
 	CCEvent event(tempId, tempName,tempDate, tempLocation, tempDesc);
 	v.push_back(event);
 	sqlite3_finalize(stmt);
-	cout << "returning" << endl;
 	return v;
 
 }
@@ -619,7 +536,6 @@ vector<CCEvent> database::searchEventByLoc(string word)
 
 	string s = "select * from EventTable where location=?";
 	int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
-	cout << "Debug point 1" << endl;
 	if (sqlite3_bind_text(stmt, 1, word.c_str(), -1, NULL) != SQLITE_OK) {
 		cout << "did not work" << endl;
 	}
@@ -635,13 +551,6 @@ vector<CCEvent> database::searchEventByLoc(string word)
 		tempLocation =(const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3))));
 		tempDesc = (const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4))));
 		tempId = sqlite3_column_int(stmt, 0);
-		cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
-		cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
-		cout << "date = " << sqlite3_column_text(stmt, 2) << endl;
-		cout << "location = " << sqlite3_column_text(stmt, 3) << endl;
-		cout << "description = " << sqlite3_column_text(stmt, 4) << endl;
-		cout << "IN WHILE LOOP" << endl;
-		cout << endl;
 	}
 	//string tempName = string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
 	// string tempEmail(const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2))));
@@ -650,7 +559,6 @@ vector<CCEvent> database::searchEventByLoc(string word)
 	CCEvent event(tempId, tempName,tempDate, tempLocation, tempDesc);
 	v.push_back(event);
 	sqlite3_finalize(stmt);
-	cout << "returning" << endl;
 	return v;
 
 }
@@ -664,7 +572,6 @@ vector<CCEvent> database::searchEventByDesc(string word)
 
 	string s = "select * from EventTable where description=?";
 	int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
-	cout << "Debug point 1" << endl;
 	if (sqlite3_bind_text(stmt, 1, word.c_str(), -1, NULL) != SQLITE_OK) {
 		cout << "did not work" << endl;
 	}
@@ -680,13 +587,6 @@ vector<CCEvent> database::searchEventByDesc(string word)
 		tempLocation =(const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3))));
 		tempDesc = (const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4))));
 		tempId = sqlite3_column_int(stmt, 0);
-		cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
-		cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
-		cout << "date = " << sqlite3_column_text(stmt, 2) << endl;
-		cout << "location = " << sqlite3_column_text(stmt, 3) << endl;
-		cout << "description = " << sqlite3_column_text(stmt, 4) << endl;
-		cout << "IN WHILE LOOP" << endl;
-		cout << endl;
 	}
 	//string tempName = string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
 	// string tempEmail(const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2))));
@@ -695,7 +595,6 @@ vector<CCEvent> database::searchEventByDesc(string word)
 	CCEvent event(tempId, tempName,tempDate, tempLocation, tempDesc);
 	v.push_back(event);
 	sqlite3_finalize(stmt);
-	cout << "returning" << endl;
 	return v;
 
 
@@ -718,7 +617,6 @@ vector<CCEvent> database::searchEventById(int i)
 	string tempI = out.str();
 
 	int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, &pzTest);
-	cout << "Debug point 1" << endl;
 	if (sqlite3_bind_text(stmt, 1, tempI.c_str(), -1, NULL) != SQLITE_OK) {
 		cout << "did not work" << endl;
 	}
@@ -734,18 +632,10 @@ vector<CCEvent> database::searchEventById(int i)
 		tempLocation =(const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3))));
 		tempDesc = (const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4))));
 		tempId = sqlite3_column_int(stmt, 0);
-		cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
-		cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
-		cout << "date = " << sqlite3_column_text(stmt, 2) << endl;
-		cout << "location = " << sqlite3_column_text(stmt, 3) << endl;
-		cout << "description = " << sqlite3_column_text(stmt, 4) << endl;
-		cout << "IN WHILE LOOP" << endl;
-		cout << endl;
 	}
 	CCEvent event(tempId, tempName,tempDate, tempLocation, tempDesc);
 	v.push_back(event);
 	sqlite3_finalize(stmt);
-	cout << "returning" << endl;
 	return v;
 
 
