@@ -12,7 +12,7 @@ CCEvent::CCEvent() {
 	description = "nodescription";
 }
 
-CCEvent::CCEvent(int _id, string _title, string _dateTime, string _location, string _description){
+CCEvent::CCEvent(int _id, string _title, string _location, string _dateTime, string _description){
 	id = _id;
 	title = _title;
 	location = _location;
