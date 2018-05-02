@@ -5,7 +5,7 @@
 #include <string>
 
 class Student;
-class ccevent;
+class CCEvent;
 class database 
 {
 	public:
@@ -17,20 +17,20 @@ class database
 		std::string getName(int);
 		
 		void toString();
-//		void searchEventById(int);
-		void searchByEventName(std::string);
-		void searchByEventLoc(std::string);	
-		void searchByEventDesc(std::string);
+		std::vector<CCEvent> searchEventById(int);
+		std::vector<CCEvent> searchEventByName(std::string);
+		std::vector<CCEvent> searchEventByLoc(std::string);	
+		std::vector<CCEvent> searchEventByDesc(std::string);
 		
 //		void searchByName(std::string);
 //		void searchByDesc(std::string);
 		
-		void searchStudentByName(std::string);
+		std::vector<Student> searchStudentByName(std::string);
 		std::vector<Student> searchStudentByEmail(std::string);
-		void searchStudentByPreferences(std::string);
-		void searchStudentByCurrentcc(int);
-		void searchStudentByGradsemester(std::string);
-		void searchStudentByGradyear(int);
+		std::vector<Student> searchStudentByPreferences(std::string);
+		std::vector<Student> searchStudentByCurrentcc(int);
+		std::vector<Student> searchStudentByGradsemester(std::string);
+		std::vector<Student> searchStudentByGradyear(int);
 		
 //		void searchByLoc(std::string);
 //		void searchById(int);
