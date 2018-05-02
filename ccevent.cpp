@@ -5,17 +5,23 @@ using namespace std;
 
 
 CCEvent::CCEvent() {
+	id = 0;
 	title = "notitle";
 	location = "nolocation";
 	dateTime = "nodatetime";
 	description = "nodescription";
 }
 
-CCEvent::CCEvent(string _title, string _location, string _dateTime, string _description){
+CCEvent::CCEvent(int _id, string _title, string _location, string _dateTime, string _description){
+	id = _id;
 	title = _title;
 	location = _location;
 	dateTime = _dateTime;
 	description = _description;
+}
+
+void CCEvent::setId(int i){
+        id = i;
 }
 
 void CCEvent::setTitle(string t){
@@ -32,6 +38,10 @@ void CCEvent::setDateTime(string dt){
 
 void CCEvent::setDescription(string d){
 	description = d;
+}
+
+int CCEvent::getId(){
+	return id;
 }
 
 string CCEvent::getTitle(){
