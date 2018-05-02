@@ -30,6 +30,6 @@ database.o: database.h sqlite3.h database.cpp student.h ccevent.h
 	g++ -c database.cpp
 
 # Use gcc to compile this C code
-sqtlite3.o: sqlite3.h sqlite3.c
+sqlite3.o: sqlite3.h sqlite3.c
 	gcc -c sqlite3.c
 
