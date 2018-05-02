@@ -592,7 +592,7 @@ vector<CCEvent> database::searchEventByName(string word)
 		cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
 		cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
 		cout << "date = " << sqlite3_column_text(stmt, 2) << endl;
-		cout << "location = " << sqlite3_column_int(stmt, 3) << endl;
+		cout << "location = " << sqlite3_column_text(stmt, 3) << endl;
 		cout << "description = " << sqlite3_column_text(stmt, 4) << endl;
 		cout << "IN WHILE LOOP" << endl;
 		cout << endl;
@@ -637,7 +637,7 @@ vector<CCEvent> database::searchEventByLoc(string word)
 		cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
 		cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
 		cout << "date = " << sqlite3_column_text(stmt, 2) << endl;
-		cout << "location = " << sqlite3_column_int(stmt, 3) << endl;
+		cout << "location = " << sqlite3_column_text(stmt, 3) << endl;
 		cout << "description = " << sqlite3_column_text(stmt, 4) << endl;
 		cout << "IN WHILE LOOP" << endl;
 		cout << endl;
@@ -682,7 +682,7 @@ vector<CCEvent> database::searchEventByDesc(string word)
 		cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
 		cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
 		cout << "date = " << sqlite3_column_text(stmt, 2) << endl;
-		cout << "location = " << sqlite3_column_int(stmt, 3) << endl;
+		cout << "location = " << sqlite3_column_text(stmt, 3) << endl;
 		cout << "description = " << sqlite3_column_text(stmt, 4) << endl;
 		cout << "IN WHILE LOOP" << endl;
 		cout << endl;
@@ -736,7 +736,7 @@ vector<CCEvent> database::searchEventById(int i)
 		cout << "Ind = " << sqlite3_column_int(stmt, 0) << endl;
 		cout << "name = " << sqlite3_column_text(stmt, 1) << endl;
 		cout << "date = " << sqlite3_column_text(stmt, 2) << endl;
-		cout << "location = " << sqlite3_column_int(stmt, 3) << endl;
+		cout << "location = " << sqlite3_column_text(stmt, 3) << endl;
 		cout << "description = " << sqlite3_column_text(stmt, 4) << endl;
 		cout << "IN WHILE LOOP" << endl;
 		cout << endl;
