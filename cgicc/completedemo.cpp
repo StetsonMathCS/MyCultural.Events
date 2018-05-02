@@ -75,40 +75,40 @@ printForm(const Cgicc& cgi)
 
 	cout << "<div class=\"form-group\">\n";	
 	cout <<	"<label for=\"name\">First Name</label>";
-	cout << "<input type=\"text\" class=\"form-control\" name=\"name\" value = \"John\" aria-describedby=\"emailHelp\" placeholder=\"Enter first name\">";
+	cout << "<input type=\"text\" class=\"form-control\" name=\"name\" value = \"\" aria-describedby=\"emailHelp\" placeholder=\"Enter first name\">";
 	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter your first name.</small>";
 	cout << "</div>";
 
 	cout << "<div class=\"form-group\">\n";	
 	cout <<	"<label for=\"name\">E-mail Address</label>";
-	cout << "<input type=\"text\" class=\"form-control\" name=\"email\" value = \"example@stetson.edu\" aria-describedby=\"emailHelp\" placeholder=\"Enter your e-mail address\">";
+	cout << "<input type=\"email\" class=\"form-control\" name=\"email\" value = \"\" aria-describedby=\"emailHelp\" placeholder=\"example@stetson.edu\">";
 	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter your email address</small>";
 	cout << "</div>";
 
 	cout << "<div class=\"form-group\">\n";	
 	cout <<	"<label for=\"name\">Graduation Year</label>";
-	cout << "<input type=\"text\" class=\"form-control\" name=\"years\" value = \"2018\" min=\"2018-01-01\" aria-describedby=\"emailHelp\" placeholder=\"Enter a year\">";
+	cout << "<input type=\"number\" class=\"form-control\" name=\"years\" value = \"2018\" min=\"2018-01-01\" aria-describedby=\"emailHelp\" placeholder=\"2018\">";
 	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter the year you will graduate</small>";
 	cout << "</div>";
 
 	
 	cout << "<div class=\"form-group\">\n";	
 	cout <<	"<label for=\"name\">Graduation Semester</label>";
-	cout << "<input type=\"text\" class=\"form-control\" name=\"semesters\" value = \"Spring\" min=\"2018-01-01\" aria-describedby=\"emailHelp\" placeholder=\"Enter a semester\">";
+	cout << "<input type=\"text\" class=\"form-control\" name=\"semesters\" value = \"\" min=\"2018-01-01\" aria-describedby=\"emailHelp\" placeholder=\"Enter a semester\">";
 	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter the semester you will graduate</small>";
 	cout << "</div>";
 
 
 	cout << "<div class=\"form-group\">\n";	
 	cout <<	"<label for=\"name\">Cultural Credits</label>";
-	cout << "<input type=\"text\" class=\"form-control\" name=\"credits\" value = \"20\" aria-describedby=\"emailHelp\" placeholder=\"Enter # of credits\">";
+	cout << "<input type=\"number\" class=\"form-control\" name=\"credits\" value = \"0\" aria-describedby=\"emailHelp\" placeholder=\"Enter # of credits\">";
 	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Number of desired cultural credits.</small>";
 	cout << "</div>";
 
 	cout << "<div class=\"form-group\">\n";	
-	cout <<	"<label for=\"name\">Event preferences</label>";
-	cout << "<input type=\"text\" class=\"form-control\" name=\"events\" value = \"tech\" aria-describedby=\"emailHelp\" placeholder=\"Enter words related to your interests\">";
-	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter words related to your interests</small>";
+	cout <<	"<label for=\"name\">Event preference</label>";
+	cout << "<input type=\"text\" class=\"form-control\" name=\"events\" value = \"\" aria-describedby=\"emailHelp\" placeholder=\"E.g. tech\">";
+	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter a word related to your interests</small>";
 	cout << "</div>";
 /*
 
@@ -148,7 +148,7 @@ printForm(const Cgicc& cgi)
 
 bool checkCredits(const Cgicc& cgi){
 	const_form_iterator credit = cgi.getElement("credits");
-	if((*credit).getIntegerValue() < 24 && (*credit).getIntegerValue() > 0 && !(*credit).isEmpty()){
+	if(credit->getIntegerValue() < 24 && credit->getIntegerValue() > 0 && !credit->isEmpty()){
 		return true;
 	}else{
 		return false;
@@ -160,7 +160,7 @@ bool checkName(const Cgicc& cgi){
 	const_form_iterator name = cgi.getElement("name");
 	std::string temp;
 	bool letters =true;
-	temp = (*name).getStrippedValue();
+	temp = name->getStrippedValue();
 	for(int i =0; i< temp.length(); i++){
 		int upper = toupper(temp[i]);
 		if(upper < 'A' || upper > 'Z'){
@@ -176,15 +176,15 @@ bool checkName(const Cgicc& cgi){
 
 
 }
-
-bool checkDate(const Cgicc& cgi){
-	const_form_iterator year = cgi.getElement("years");
-	std::string temp = (*year).getStrippedValue();
-	bool letters = false;
+bool checkEvents(const Cgicc& cgi){
+	const_form_iterator name = cgi.getElement("events");
+	std::string temp;
+	bool letters =true;
+	temp = name->getStrippedValue();
 	for(int i =0; i< temp.length(); i++){
 		int upper = toupper(temp[i]);
 		if(upper < 'A' || upper > 'Z'){
-			letters = true;
+			letters = false;
 		}
 	}
 	if(temp.length() <= 10 && letters == true){
@@ -193,13 +193,31 @@ bool checkDate(const Cgicc& cgi){
 
 		return false;
 	}	
+}
+
+bool checkDate(const Cgicc& cgi){
+	const_form_iterator year = cgi.getElement("years");
+	std::string temp = year->getStrippedValue();
+	bool letters = false;
+	for(int i =0; i< temp.length(); i++){
+		int upper = toupper(temp[i]);
+		if(upper < 'A' || upper > 'Z'){
+			letters = true;
+		}
+	}
+	if(temp.length() <= 4 && letters == true&& year->getIntegerValue() > 2017){
+		return true;
+	}else{
+
+		return false;
+	}	
 
 }
 
-bool checkEvents(const Cgicc& cgi){
-	const_form_iterator events = cgi.getElement("event");
-	std::string temp = (*events).getStrippedValue();
-	if(temp.length() < 40){
+bool checkSem(const Cgicc& cgi){
+	const_form_iterator sem = cgi.getElement("semesters");
+	std::string temp = sem->getStrippedValue();	
+	if(temp == "Spring" || temp == "Fall"){
 		return true;
 	}else{
 		return false;
@@ -207,6 +225,16 @@ bool checkEvents(const Cgicc& cgi){
 
 }
 
+
+/*bool checkEvents(const Cgicc& cgi){
+	const_form_iterator events = cgi.getElement("event");
+	std::string temp = events->getStrippedValue();
+	if(temp.length() < 40){
+		return true;
+	}else{
+		return false;
+	}
+*/
 int main(int /*argc*/, 
 		char ** /*argv*/)
 {
@@ -245,7 +273,7 @@ int main(int /*argc*/,
 		// Start the HTML body
 		cout << body() << endl;
 
-		cout << h1() << "MYCULTURAL.EVENTS" << h1() << endl;
+		cout << h1() << "<center>MYCULTURAL.EVENTS" << h1() << endl;
 
 		// Get a pointer to the environment
 		const CgiEnvironment& env = cgi.getEnvironment();
@@ -256,16 +284,6 @@ int main(int /*argc*/,
 	
 
 
-		// If the user wants to save the submission, do it
-		if(cgi.queryCheckbox("save")) {
-			// Make sure the save file is readable and writable by the CGI process
-			cgi.save("save");
-			cout << p(h2("Data Saved")) << endl;
-			// const_form_iterator name = cgi.getElement("name");	
-			cout << cgicc::div().set("class", "notice") << endl;
-			cout << "Your data has been saved, and may be restored (by anyone) "
-				<< "via the same form." <<  endl << cgicc::div() << p() << endl;
-		}
 
 		// If the user wants to restore from the last submission, do it
 		if(cgi.queryCheckbox("restore")) {
@@ -276,28 +294,7 @@ int main(int /*argc*/,
 			cout << "The data displayed has been restored from a file on disk."
 				<< endl << cgicc::div() << p() << endl;
 		}
-		//   if (checkName(cgi)&&checkCredits(cgi)&&checkDate(cgi)&&checkEvents(cgi)){ 
-		// If the user requested a dump of the environment,
-		// create a simple table showing the values of the 
-		// environment variables
-		if(cgi.queryCheckbox("showEnv"))
-			dumpEnvironment(env);
-
-		// If the user requested, print out the raw form data from 
-		// the vector of FormEntries.  This will contain every 
-		// element in the list.
-		// This is one of two ways to get at form data, the other
-		// being the use of Cgicc's getElement() methods.  
-		if(cgi.queryCheckbox("showFE"))
-			dumpList(cgi);
-
-		// If the user requested data via Cgicc's getElement() methods, do it.
-		// This is different than the use of the list of FormEntries 
-		// because it requires prior knowledge of the name of form elements.
-		// Usually they will be known, but you never know.
-					//}
-		// Print out the form to do it again
-		cout << br() << endl;
+	cout << br() << endl;
 		printForm(cgi);
 		cout << hr().set("class", "half") << endl;
 
@@ -335,17 +332,17 @@ int main(int /*argc*/,
 		cout << cgicc::div() << endl;
 		cout << body() << html() << endl;
 
-			if (checkName(cgi)&&checkCredits(cgi)&&checkDate(cgi)&&checkEvents(cgi)){ 
+			if (checkSem(cgi)&&checkName(cgi)&&checkCredits(cgi)&&checkDate(cgi)&&checkEvents(cgi)){ 
 				showForm(cgi);
 
 			const_form_iterator name = cgi.getElement("name");
 			const_form_iterator mail = cgi.getElement("email");
 			const_form_iterator year = cgi.getElement("years");
-			const_form_iterator semesters = cgi.getElement("semester");
+			const_form_iterator semesters = cgi.getElement("semesters");
 			const_form_iterator credit = cgi.getElement("credits");
-			const_form_iterator tags = cgi.getElement("event");
+			const_form_iterator tags = cgi.getElement("events");
 			database db;
-			db.insertStudent(1,name->getStrippedValue(),mail->getStrippedValue(), credit->getIntegerValue(), tags->getStrippedValue());
+			db.insertStudentData(name->getStrippedValue(),mail->getStrippedValue(),1, semesters->getStrippedValue(),year->getIntegerValue(),credit->getIntegerValue(), tags->getStrippedValue());
 		}
 	
 
@@ -484,44 +481,13 @@ dumpEnvironment(const CgiEnvironment& env )
 }
 
 // Print out the value of every form element
-	void
-dumpList(const Cgicc& formData) 
-{
-	if (checkName(formData)&&checkCredits(formData)&&checkDate(formData)&&checkEvents(formData)){ 
-
-
-		cout << h2("Form Data via vector") << endl;
-
-		cout << cgicc::div().set("align","center") << endl;
-
-		cout << table()<< endl;
-
-		cout << tr().set("class","title") << td("Element Name") 
-			<< td("Element Value") << tr() << endl;
-
-		// Iterate through the vector, and print out each value
-		const_form_iterator iter;
-		for(iter = formData.getElements().begin(); 
-				iter != formData.getElements().end(); 
-				++iter) {
-			cout << tr().set("class","data") << td(iter->getName()) 
-				<< td(iter->getValue()) << tr() << endl;
-		}
-		cout << table() << cgicc::div() << endl;
-	}
-}
-
-// Print out information customized for each element
-	void
+void
 showForm(const Cgicc& formData) 
-{
-	if (checkName(formData)&&checkCredits(formData)&&checkDate(formData)&&checkEvents(formData)){ 		
+{ 		
 
 	cout << "<div class=\"form-group\">\n";
-	cout << "<font size=\"+2\">Thank You!</font>"; 	
-	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Your infommation was stored successfully!</small>";
+	cout << "<font size=\"+5\">Thank You!</font>"; 	
+	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Your information was stored successfully!</small>";
 	cout << "</div>";
 
-
-	}
 }

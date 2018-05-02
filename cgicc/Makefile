@@ -27,8 +27,20 @@ demo.cgi: demo.o
 demo.o: demo.cpp
 	g++ -Wall -c demo.cpp
 
-completedemo.cgi: completedemo.o
-	g++ -pthread -Wall -o completedemo.cgi completedemo.o database.o sqlite3.o -ldl -lcgicc
+completedemo.cgi: completedemo.o database.o sqlite3.o
+	g++ -pthread -Wall -o completedemo.cgi completedemo.o database.o sqlite3.o ccevent.o student.o -ldl -lcgicc
 
 completedemo.o: completedemo.cpp
 	g++ -Wall -c completedemo.cpp
+
+database.o: database.h sqlite3.h database.cpp student.h ccevent.h
+	g++ -c student.cpp ccevent.cpp database.cpp
+
+sqlite3.o: sqlite3.h sqlite3.c
+	gcc -c sqlite3.c
+
+ccevent.o: ccevent.cpp database.h
+	g++ -Wall -c ccevent.cpp
+
+student.o: student.cpp database.h
+	g++ -Wall -c student.cpp
