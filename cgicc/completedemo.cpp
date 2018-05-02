@@ -31,7 +31,7 @@
 #include "cgicc/Cgicc.h"
 #include "cgicc/HTTPHTMLHeader.h"
 #include "cgicc/HTMLClasses.h"
-#include "database.h"
+#include "../database.h"
 
 
 #if HAVE_SYS_UTSNAME_H
@@ -333,8 +333,7 @@ int main(int /*argc*/,
 		cout << body() << html() << endl;
 
 			if (checkSem(cgi)&&checkName(cgi)&&checkCredits(cgi)&&checkDate(cgi)&&checkEvents(cgi)){ 
-				showForm(cgi);
-
+				
 			const_form_iterator name = cgi.getElement("name");
 			const_form_iterator mail = cgi.getElement("email");
 			const_form_iterator year = cgi.getElement("years");
@@ -342,7 +341,7 @@ int main(int /*argc*/,
 			const_form_iterator credit = cgi.getElement("credits");
 			const_form_iterator tags = cgi.getElement("events");
 			database db;
-			db.insertStudentData(name->getStrippedValue(),mail->getStrippedValue(),1, semesters->getStrippedValue(),year->getIntegerValue(),credit->getIntegerValue(), tags->getStrippedValue());
+			db.insertStudentData(name->getStrippedValue(),mail->getStrippedValue(),credit->getIntegerValue(), semesters->getStrippedValue(), year->getIntegerValue(), tags->getStrippedValue());
 		}
 	
 
