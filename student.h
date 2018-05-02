@@ -5,8 +5,8 @@
 #include <set>
 
 #include "database.h"
-#include "emaildaemon/automaticemail.h"
-#include "emaildaemon/interestemail.h"
+//#include "emaildaemon/automaticemail.h"
+//#include "emaildaemon/interestemail.h"
 
 class Student {
 private:
@@ -34,6 +34,8 @@ public:
     void setGradYear(int y);
     void setCurrentCC(int cc);
     void setPriorityLevel();
+
+    //void setUpEmail(Student st, CCevent e);
     
     std::string getName();
     std::string getEmail();
