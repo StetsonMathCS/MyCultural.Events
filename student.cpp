@@ -16,7 +16,7 @@ Student::Student() : interests()
     gradSem = "Fall";
     gradYear = -1;
     currentCC = -1;
-    
+    priorityLevel = -1;    
     sendAutomaticEmail = false;
     sendInterestEmail = false;
    
@@ -32,7 +32,7 @@ Student::Student(string _name, string _email, int _id, string _gradSem, int _gra
     gradYear = _gradYear;
     currentCC = _cc;
     interests = _interests;
-    
+    priorityLevel = -1;   
     sendAutomaticEmail = false;
     sendInterestEmail = false;
 }
