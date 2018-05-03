@@ -20,46 +20,111 @@ using namespace std;
  * 	9.) send to Nick and Isabel
  */
 
-/*
-void find_and_replace(string& file_contents,const string& f, const string& r) {
-	string pos = file_contents.find(f);
-	while (pos != string::npos) {
-		file_contents.replace(pos, f.length(), r);
-		pos = file_contents.find(f, pos);
-	}
-
-}
-
-string getfile(ifstream& is) {
-  string contents;
-  for (char ch; is.get(ch); contents.push_back(ch)) {}
-  return contents;
-}
-*/
-
 void setStudentNameInEmail(ifstream& in, ofstream& out, Student student){
 	string line;
         string wordToReplace = "!!FirstName!!";
         size_t len = wordToReplace.length();
-                        while (getline(in, line)){
-                                while (true){
-                                        size_t pos = line.find(wordToReplace);
-                                        if (pos != string::npos){
-                                                line.replace(pos, len, "Heyley");
-						//break;
-                                        	out << line << endl;
-					}else{
-						out << line << endl;
-                                                break;
-                                        }
-
-                                        //out << line << endl;
-                        	}
+        while (getline(in, line)){
+        	while (true){
+                	size_t pos = line.find(wordToReplace);
+                        if (pos != string::npos){
+				if(student.getName() == ""){
+					line.replace(pos, len, " No Name");
+				}else{
+					line.replace(pos, len, " " + student.getName());
+				}
+			}else{
+				out << line << endl;
+                                break;
+                        }
+               	}
 				
-				//out << line << endl;
-			}	
-			//out << line << endl;
+	}	
 }
+
+void setEventDescriptionInEmail(ifstream& in, ofstream& out, CCEvent e){
+        string line;
+        string wordToReplace = "!!Description!!";
+        size_t len = wordToReplace.length();
+        while (getline(in, line)){
+                while (true){
+                        size_t pos = line.find(wordToReplace);
+                        if (pos != string::npos){ 
+				if(e.getDescription() == ""){
+					line.replace(pos, len, " No Description");
+				}else{
+					line.replace(pos, len, " " + e.getDescription());
+				}
+                        }else{  
+                                out << line << endl;
+                                break;
+                        }
+                }
+         
+        }
+}
+	
+	
+void setEventTimeInEmail(ifstream& in, ofstream& out, CCEvent e){
+        string line;
+	string wordToReplace = "!!Time!!";
+        size_t len = wordToReplace.length();
+        while (getline(in, line)){
+                while (true){
+                        size_t pos = line.find(wordToReplace);
+                        if (pos != string::npos){
+                                line.replace(pos, len, " " + e.getDateTime());
+                        }else{  
+                                out << line << endl;
+                                break;
+                        }
+                }
+         
+        }
+
+
+}
+
+void setEventLocationInEmail(ifstream& in, ofstream& out, CCEvent e){
+        string line;
+	string wordToReplace = "!!Location!!";
+        size_t len = wordToReplace.length();
+        while (getline(in, line)){
+                while (true){
+                        size_t pos = line.find(wordToReplace);
+                        if (pos != string::npos){
+                                line.replace(pos, len, " " + e.getLocation());
+                        }else{
+                                out << line << endl;
+                                break;
+                        }
+                }
+
+        }
+
+
+}
+
+/*
+void setEventPreferencesInEmail(ifstream& in, ofstream& out, CCEvent e){
+        wordToReplace = "!!Preferences!!";
+        len = wordToReplace.length();
+        while (getline(in, line)){
+                while (true){
+                        size_t pos = line.find(wordToReplace);
+                        if (pos != string::npos){
+                                line.replace(pos, len, e.getLocation());
+                        }else{
+                                out << line << endl;
+                                break;
+                        }
+                }
+
+        }
+
+
+}
+*/
 
 
 int main(int argc, const char** argv){
@@ -69,15 +134,13 @@ int main(int argc, const char** argv){
 		return -1;
 	}
 	database db(argv[1]);
-	//db.insertStudentData("Heyley", "hgatewood@stetson.edu", 2020, "Fall", 10, "art");
-	//db.insertStudentData("John", "johndoe@stetson.edu", 2019, "Fall", 8, "music, film");
 
-	ifstream filein("textfile.txt");
-	ofstream fileout("temp.txt");
-	if(!filein || !fileout) //if both files are not available
+	ifstream filein("email2.html"); //email template html
+	ofstream fileout("filledStName.html");
+	if(!filein || !fileout)
 	{
-        	cout << "Error opening files!" << endl;
-        	return 1;
+        	cout << "ERROR OPENING FILES: email2.html or filledStName.html does not exist in this directory" << endl;
+        	return -1;
     	}
 
 
@@ -93,68 +156,51 @@ int main(int argc, const char** argv){
                 cout << "Student's name is: " << st.getName() << endl;
 		cout << "Student's priority level has been set to: " << priorityLevel << endl;
                 //if(priorityLevel > 0){
-                        for(int j = 0; j < db.rowsInEventTable(); j++){
-				vector<CCEvent> ccvec = db.searchEventById(1);
+                       // for(int j = 0; j < db.rowsInEventTable(); j++){
+				vector<CCEvent> ccvec = db.searchEventById(14);
         	                e = ccvec[0];
                 	        cout << "Date/Time for this event is: " << e.getDateTime() << endl;
-			//Chooses Cultural Credit for that student
-                        }
-			//Setting the Student's First name in the email template
-			setStudentNameInEmail(filein, fileout, st);
-/*			string line;
-    			string wordToReplace = "!!FirstName!!";
-    			size_t len = wordToReplace.length();
-    			while (getline(filein, line)){
-        			while (true){
-            				size_t pos = line.find(wordToReplace);
-            				if (pos != string::npos)
-                				line.replace(pos, len, "GOODBYE");
-            				else 
-                				break;
-        				}	
-
-        				fileout << line << '\n';
-    			}*/
+                        //}
+                        
+			cout << "Event Title: " << e.getTitle() << endl; 
+			cout << "Location: " << e.getLocation() << endl;
+			cout << "Date/Time: " << e.getDateTime() << endl;
+			cout << "Description: " << e.getDescription() << endl;	
 			
-		//}
-		//}
-	}
+
+			setStudentNameInEmail(filein, fileout, st);
+			ifstream filein2("filledStName.html");
+			ofstream fileout2("filledEventDesc.html");
+			if(!filein2 || !fileout2)
+      			{
+                		cout << "ERROR OPENING FILES: filledStName.html filledEventDesc.html does not exist in this directory" << endl;
+                		return -2;
+        		}
+			cout << "Event Description has been set in the Email." << endl;
+			
+			setEventDescriptionInEmail(filein2, fileout2, e);
+			ifstream filein3("filledEventDesc.html");
+			ofstream fileout3("filledEventTime.html");
+			if(!filein3 || !fileout3)
+        		{
+                		cout << "ERROR OPENING FILES: filledEventDesc.html or filledEventTime.html does not exist in this directory" << endl;
+                		return -3;
+        		}
+			cout << "Event Time has been set in the Email." << endl;
+			
+			setEventTimeInEmail(filein3, fileout3, e);
+			ifstream filein4("filledEventTime.html");			 
+			ofstream fileout4("finalEmail.html");
+			if(!filein4 || !fileout4)
+                        {
+                                cout << "ERROR OPENING FILES: fiilledEventTime.html or finalEmail.html does not exist in this directory" << endl;
+                                return -4;
+                        }
+			setEventLocationInEmail(filein4, fileout4, e);
+			cout<< "Event Location has been set in the Email.\nEmail template complete.\nOpen 'finalEmail.html' to view the code." << endl;
 	
-	//Settin the Event's Time in the email template
-
-
-
-	//find_and_replace(contents, "HELLO", "GOODBYE");
-	//string contents = getfile(file);
-	//find_and_replace(contents, "HELLO", "GOODBYE");
-	//fileout << contents;
-
-/*
-	vector<CCEvent> v = db.searchEventById(1);
-	CCEvent e = v[0];
-
-
-	//CCEvent e;
-	cout << "Title: " << e.getTitle() << endl;
-	cout << "Location: " << e.getLocation() << endl;
-	cout << "Date/Time: " << e.getDateTime() << endl;
-	cout << "Description: " << e.getDescription() << endl;
-<<<<<<< HEAD
-*/
-/*
-	//database db;
-	for(int i = 0; i < 20; i++){
 	
-		cout << "CCEvent: " << db.getName(i) << endl;
+
 	}
-*/	
-/*	if(argc != 2) {
-                cout << "Usage: " << argv[0] << " databasename.db" << endl;
-                return -1;
-        }
-	database db(argv[1]);
-	vector<Student> v;
-	v = db.searchStudentByName("kyle");
-	cout << v[0].getName() << endl;*/
 	return 0;
 }
