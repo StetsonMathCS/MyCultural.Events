@@ -112,6 +112,10 @@ void database::insertStudentData(string name, string email, int currentCC , stri
 
 void database::insertEventData(string name,string time,string loc,string desc)
 {
+	vector<CCEvent> v = searchEventByName(name);
+	if(name == v[0].getTitle() && time == v[0].getDateTime() && loc == v[0].getLocation()){
+		return;
+	} 
 	std::ostringstream ss;
 	//	ss << id;
 	string query="INSERT INTO EventTable(name, date_and_time, location, description) VALUES (";
