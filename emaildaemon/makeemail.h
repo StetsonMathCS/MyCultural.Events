@@ -11,7 +11,7 @@
 
 class MakeEmail {
 	private:
-		std::string email;
+		std::string emailStr;
 	public:
 		MakeEmail();
 		void setStudentNameInEmail(Student);
@@ -20,6 +20,9 @@ class MakeEmail {
 		void setEventTimeInEmail(std::ifstream&, std::ofstream&, CCEvent);
 		void setEventLocationInEmail(std::ifstream&, std::ofstream&, CCEvent);
 		int setEmailString(std::vector<Student>, std::vector<CCEvent>);		
+
+		void storeEmailString(std::string);
+		std::string getEmailString();
 
 };
 #endif
