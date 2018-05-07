@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include "../student.h"
 #include "../ccevent.h"
 #include "makeemail.h"
@@ -8,14 +9,18 @@ using namespace std;
 #include <string>
 #include <vector>
 
-MakeEmail::MakeEmail(){
-	//student = new Student();
-	//event = new CCEvent();
-	email = "";
-	//fin = "email2.html";
-	//fout = "filledStName.html";
-//	ifstream filein("email2.html");
-//	ofstream fileout("filledStName.html");
+MakeEmail::MakeEmail()
+{
+	emailStr = "no email";
+}
+
+void MakeEmail::storeEmailString(string str){
+        emailStr = str;
+}
+
+
+string MakeEmail::getEmailString(){
+        return emailStr;
 }
 
 void MakeEmail::setStudentNameInEmail(Student student){
@@ -130,7 +135,7 @@ void MakeEmail::setEventLocationInEmail(ifstream& in, ofstream& out, CCEvent eve
 int MakeEmail::setEmailString(vector<Student> stvec, vector<CCEvent> ccvec){
 	Student student;
 	CCEvent event;
-	for(int i = 1; i < 2; i++){
+//	for(int i = 1; i < 2; i++){
                 //vector<Student> stvec = db.searchStudentById(i);
                 student = stvec[0];
                
@@ -226,6 +231,7 @@ int MakeEmail::setEmailString(vector<Student> stvec, vector<CCEvent> ccvec){
                         if(!filein4 || !fileout4)
                         {
                                 cout << "ERROR OPENING FILES: filledEventDesc.html or filledEventTime.html does not exist in this directory" << endl;
+
                                 return -4;
                         }
                         setEventTimeInEmail(filein4, fileout4, event);
@@ -245,15 +251,12 @@ int MakeEmail::setEmailString(vector<Student> stvec, vector<CCEvent> ccvec){
                 if(priorityLevel < 0){ //priorityLevel of -1 is LOW priority, no email is sent
 			cout << "Student is LOW PRIORITY." << endl;
                 }
-	
-	}
+		stringstream buffer;
+		ifstream finalEmail("finalEmail.html");	
+    		buffer << finalEmail.rdbuf();
+    		storeEmailString(buffer.str());
+//		cout << getEmailString() << endl;
+//	}
 	return 0;
 }
-/*
-void setStudent(Student st){
-	student = st;
-}
 
-void setEvent(CCEvent e){
-	event = e;
-}*/
