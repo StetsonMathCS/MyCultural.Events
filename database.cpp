@@ -86,7 +86,6 @@ void database::insertStudentData(string name, string email, int currentCC , stri
 	query.append(ss.str() + ",");
 	query.append("'" + preferences + "')");
 
-	cout<<query<<endl;
 	char *szErrMsg = 0;
 	int rc = sqlite3_exec(db,query.c_str() , NULL, NULL, &szErrMsg);
 	if (rc != SQLITE_OK)
@@ -102,13 +101,27 @@ void database::insertEventData(string name,string time,string loc,string desc)
 
 	sqlite3_stmt * stmt;
 	vector<CCEvent> v = searchEventByName(name);
-	if(name == v[0].getTitle() && time == v[0].getDateTime() && loc == v[0].getLocation()){
-		return;
+	for (int i = 0; i < v.size(); i++)
+	{
+		if(name == v[i].getTitle() && time == v[i].getDateTime() && loc == v[i].getLocation()){
+			return;
+		}
 	} 
 	string query="INSERT INTO EventTable(name, date_and_time, location, description) VALUES (?,?,?,?)";
-	cout<<query<<endl;
 	const char *szErrMsg = 0;
 	int rc = sqlite3_prepare(db,query.c_str(), -1, &stmt, &szErrMsg);
+
+	if( rc == SQLITE_OK ) {
+ 
+		sqlite3_bind_text(stmt, 1, name.c_str(), -1, NULL);
+		sqlite3_bind_text(stmt, 2, time.c_str(), -1, NULL);
+		sqlite3_bind_text(stmt, 3, loc.c_str(), -1, NULL);
+		sqlite3_bind_text(stmt, 4, desc.c_str(), -1, NULL);
+	}
+
+
+
+//	int rc = sqlite3_prepare(db,query.c_str(), -1, &stmt, &szErrMsg);
 
 	while ( (rc = sqlite3_step(stmt)) == SQLITE_ROW) {
 		(sqlite3_column_text(stmt, 1));
@@ -445,7 +458,7 @@ vector<Student> database::searchStudentByGradyear(int year)
 }
 
 
-/* vector<CCEvent> database::searchEventByPreferences(string word)
+vector<CCEvent> database::searchEventByPreferences(string word)
 {
 	vector<CCEvent> v;
 	sqlite3_stmt *stmt;
@@ -462,9 +475,9 @@ vector<Student> database::searchStudentByGradyear(int year)
                 tempLocation =(const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3))));
                 tempDesc = (const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4))));
                 tempId = sqlite3_column_int(stmt, 0);
+		CCEvent event(tempId, tempName,tempDate, tempLocation, tempDesc);
+		v.push_back(event);
         }
-        CCEvent event(tempId, tempName,tempDate, tempLocation, tempDesc);
-        v.push_back(event);
 	cout << "After push" << endl;
 	sqlite3_finalize(stmt);
 
@@ -482,7 +495,7 @@ vector<Student> database::searchStudentByGradyear(int year)
         return v;
 
 }
-*/
+
 //search by event name
 vector<CCEvent> database::searchEventByName(string word)
 {
