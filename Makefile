@@ -26,8 +26,8 @@ databaseTest: databaseTest.o database.o student.o ccevent.o
 # Use this syntax to compile main that use database, order matters at least for some of it
 # g++ -pthread -o main main.o sqlite3.o database.o -ldl 
 
-database.o: database.h sqlite3.h database.cpp student.h ccevent.h
-	g++ -c database.cpp
+database.o: database.h database.cpp student.h ccevent.h
+	g++ -c database.cpp 
 
 # RSS parser files
 parser: rssdaemon/parser.o database.o ccevent.o student.o

@@ -103,10 +103,7 @@ void database::insertEventData(string name,string time,string loc,string desc)
 	if(name == v[0].getTitle() && time == v[0].getDateTime() && loc == v[0].getLocation()){
 		return;
 	} 
-	std::ostringstream ss;
-	//	ss << id;
 	string query="INSERT INTO EventTable(name, date_and_time, location, description) VALUES (";
-	//	query.append(ss.str());
 	query.append("'"+name+"','");
 	query.append(time+"','");
 	query.append(loc+"','");
@@ -446,6 +443,43 @@ vector<Student> database::searchStudentByGradyear(int year)
 
 }
 
+
+vector<CCEvent> database::searchEventByPreferences(string word)
+{
+	vector<CCEvent> v;
+	sqlite3_stmt *stmt;
+	string s = "select * from EventTable;";
+        int rc = sqlite3_prepare(db, s.c_str(), -1, &stmt, NULL );//preparing the statement
+	string tempName;
+        string tempDate;
+        string tempLocation;
+        string tempDesc;
+        int tempId;
+        while ( (rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+                tempName = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
+                tempDate = (const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2))));
+                tempLocation =(const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3))));
+                tempDesc = (const_cast<char*>(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4))));
+                tempId = sqlite3_column_int(stmt, 0);
+        }
+        CCEvent event(tempId, tempName,tempDate, tempLocation, tempDesc);
+        v.push_back(event);
+	sqlite3_finalize(stmt);
+
+	//v = searchEventById(rowsInEventTable());
+	/*
+	for (std::vector<CCEvent>::iterator it = v.begin(); it != v.end(); ++it)
+	{
+		string tempDesc = it->getDescription();
+		if (tempDesc.find(word) == -1)
+		{
+			v.erase(it);
+		}
+	}
+	*/
+        return v;
+
+}
 
 //search by event name
 vector<CCEvent> database::searchEventByName(string word)

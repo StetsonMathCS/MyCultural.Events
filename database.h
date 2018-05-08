@@ -21,7 +21,7 @@ class database
 		std::vector<CCEvent> searchEventByName(std::string);
 		std::vector<CCEvent> searchEventByLoc(std::string);	
 		std::vector<CCEvent> searchEventByDesc(std::string);
-		
+		std::vector<CCEvent> searchEventByPreferences(std::string);
 //		void searchByName(std::string);
 //		void searchByDesc(std::string);
 		
