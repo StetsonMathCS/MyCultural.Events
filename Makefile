@@ -1,4 +1,4 @@
-all: demo.cgi completedemo.cgi parser main
+all: demo.cgi completedemo.cgi databaseTest parser main
 
 demo.cgi: demo.o
 	g++ -Wall -o demo.cgi demo.o -lcgicc
@@ -21,21 +21,17 @@ ccevent.o: ccevent.cpp database.h
 databaseTest.o: databaseTest.cpp database.h student.h ccevent.h
 	g++ -Wall -c databaseTest.cpp database.cpp student.cpp ccevent.cpp
 
-databaseTest: databaseTest.o database.o student.o ccevent.o sqlite3.o
-	g++ -pthread -o databaseTest databaseTest.o student.o ccevent.o sqlite3.o database.o -ldl
+databaseTest: databaseTest.o database.o student.o ccevent.o 
+	g++ -pthread -o databaseTest databaseTest.o student.o ccevent.o database.o -lsqlite3
 # Use this syntax to compile main that use database, order matters at least for some of it
 # g++ -pthread -o main main.o sqlite3.o database.o -ldl 
 
 database.o: database.h sqlite3.h database.cpp student.h ccevent.h
 	g++ -c database.cpp
 
-# Use gcc to compile this C code
-sqlite3.o: sqlite3.h sqlite3.c
-	gcc -c sqlite3.c
-
 # RSS parser files
-parser: rssdaemon/parser.o database.o sqlite3.o ccevent.o student.o
-	g++ -pthread -Wall -g -o rssdaemon/parser rssdaemon/parser.o sqlite3.o database.o ccevent.o student.o -lpugixml -ldl
+parser: rssdaemon/parser.o database.o ccevent.o student.o
+	g++ -pthread -Wall -g -o rssdaemon/parser rssdaemon/parser.o database.o ccevent.o student.o -lpugixml -lsqlite3 
 
 parser.o: rssdaemon/parser.cpp database.h ccevent.h
 	g++ -Wall -g -c rssdaemon/parser.cpp
