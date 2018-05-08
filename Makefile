@@ -1,16 +1,10 @@
-all: demo.cgi completedemo.cgi databaseTest parser main
+all: completedemo.cgi databaseTest parser main
 
-demo.cgi: demo.o
-	g++ -Wall -o demo.cgi demo.o -lcgicc
+completedemo.cgi: cgicc/completedemo.o database.o ccevent.o student.o
+	g++ -pthread -Wall -o completedemo.cgi cgicc/completedemo.o database.o ccevent.o student.o -ldl -lcgicc -lsqlite3
 
-demo.o: demo.cpp
-	g++ -Wall -c demo.cpp
-
-completedemo.cgi: completedemo.o
-	g++ -Wall -o completedemo.cgi completedemo.o -lcgicc
-
-completedemo.o: completedemo.cpp
-	g++ -Wall -c completedemo.cpp
+completedemo.o: cgicc/completedemo.cpp database.h ccevent.h student.h
+	g++ -Wall -c cgicc/completedemo.cpp
 
 student.o: student.cpp database.h
 	g++ -Wall -c student.cpp
@@ -26,7 +20,7 @@ databaseTest: databaseTest.o database.o student.o ccevent.o
 # Use this syntax to compile main that use database, order matters at least for some of it
 # g++ -pthread -o main main.o sqlite3.o database.o -ldl 
 
-database.o: database.h sqlite3.h database.cpp student.h ccevent.h
+database.o: database.h database.cpp student.h ccevent.h
 	g++ -c database.cpp
 
 # RSS parser files
