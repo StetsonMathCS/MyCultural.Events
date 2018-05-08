@@ -51,7 +51,7 @@ using namespace cgicc;
 void dumpEnvironment(const CgiEnvironment& env);
 void dumpList(const Cgicc& formData);
 void showForm(const Cgicc& formData);
-
+bool print = true;
 // Print the form for this CGI
 	void
 printForm(const Cgicc& cgi)
@@ -61,13 +61,9 @@ printForm(const Cgicc& cgi)
 
 	cout << "<table>" << endl;
 
-	/*   cout << "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">";
-
-	 */
 	cout << "";
 	cout << "<html>\n";
 	cout << "<head>\n";
-//	 cout << "<h1>The Cultural Events</h1>\n";
 	cout << "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">";
 	cout << "<script></script>\n";
 	cout << "<div class=\"container\">\n";
@@ -75,7 +71,7 @@ printForm(const Cgicc& cgi)
 
 	cout << "<div class=\"form-group\">\n";	
 	cout <<	"<label for=\"name\">First Name</label>";
-	cout << "<input type=\"text\" class=\"form-control\" name=\"name\" value = \"\" aria-describedby=\"emailHelp\" placeholder=\"Enter first name\">";
+	cout << "<input type=\"text\" class=\"form-control\" name=\"name\" value = \"\" aria-describedby=\"emailHelp\" placeholder=\"Enter first name\" maxlength=\"30\" pattern=\"[A-Za-z]+\" oninvalid=\"setCustomValidity('Name can only consist of letters')\" />";
 	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter your first name.</small>";
 	cout << "</div>";
 
@@ -87,17 +83,18 @@ printForm(const Cgicc& cgi)
 
 	cout << "<div class=\"form-group\">\n";	
 	cout <<	"<label for=\"name\">Graduation Year</label>";
-	cout << "<input type=\"number\" class=\"form-control\" name=\"years\" value = \"2018\" min=\"2018-01-01\" aria-describedby=\"emailHelp\" placeholder=\"2018\">";
+	cout << "<input type=\"number\" class=\"form-control\" id =\"test\"  name=\"years\" value = \"2018\" min=\"2018\" aria-describedby=\"emailHelp\" placeholder=\"2018\">";
 	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter the year you will graduate</small>";
 	cout << "</div>";
-
 	
 	cout << "<div class=\"form-group\">\n";	
-	cout <<	"<label for=\"name\">Graduation Semester</label>";
-	cout << "<input type=\"text\" class=\"form-control\" name=\"semesters\" value = \"\" min=\"2018-01-01\" aria-describedby=\"emailHelp\" placeholder=\"Enter a semester\">";
-	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter the semester you will graduate</small>";
-	cout << "</div>";
-
+	cout <<	"<label for=\"name\">Graduation Semester </label>";
+cout	<< "<select name=\"semesters\">"
+       << "<option value=\"Fall\">Fall</option>"
+      << "<option value=\"Spring\">Spring</option>"
+	 << "</select>" 
+	"</div>" << endl;
+ 
 
 	cout << "<div class=\"form-group\">\n";	
 	cout <<	"<label for=\"name\">Cultural Credits</label>";
@@ -110,39 +107,9 @@ printForm(const Cgicc& cgi)
 	cout << "<input type=\"text\" class=\"form-control\" name=\"events\" value = \"\" aria-describedby=\"emailHelp\" placeholder=\"E.g. tech\">";
 	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter a word related to your interests</small>";
 	cout << "</div>";
-/*
 
-	cout << "<tr><td class=\"title\">In the output, show</td>"
-		<< "<td class=\"form\">"
-		<< "<input type=\"checkbox\" name=\"showEnv\" checked=\"checked\" />"
-		<< "Data from CgiEnvironment<br />"
-		<< "<input type=\"checkbox\" name=\"showFE\" checked=\"checked\" />"
-		<< "All FormEntries<br />"
-		<< "<input type=\"checkbox\" name=\"showForm\" checked=\"checked\" />"
-		<< "Data from Cgicc"
-		<< "</td></tr>" << endl;
-
-
-
-	cout << "<tr><td class=\"title\">Exception Handling</td>"
-		<< "<td class=\"form\">"
-		<< "<input type=\"checkbox\" name=\"throw\" />"
-		<< "Throw an exception to test error handling"
-		<< "</td></tr>" << endl;
-
-	cout << "<tr><td class=\"title\">Save and Restore</td>"
-		<< "<td class=\"form\">"
-		<< "<input type=\"checkbox\" name=\"save\" />"
-		<<" Save submission to a file<br />"
-		<< "<input type=\"checkbox\" name=\"restore\" />"
-		<< "Restore data from the last saved submission"
-		<< "</td></tr>" << endl;
-
-	cout << "</table>" << endl;
-*/
 	cout << "<div class=\"center\"><p>"
-		<< "<input type=\"submit\" name=\"submit\"  value=\"Submit\" />"
-		<< "<input type=\"reset\" value=\"Nevermind\" />"
+		<< "<input type=\"submit\" name=\"submit\" onsubmit =\" \"  value=\"Submit\" />"
 		<< "</p></div></form>" << endl;
 }
 
@@ -226,15 +193,7 @@ bool checkSem(const Cgicc& cgi){
 }
 
 
-/*bool checkEvents(const Cgicc& cgi){
-	const_form_iterator events = cgi.getElement("event");
-	std::string temp = events->getStrippedValue();
-	if(temp.length() < 40){
-		return true;
-	}else{
-		return false;
-	}
-*/
+
 int main(int argc, 
 		const char **argv)
 {
@@ -246,15 +205,7 @@ int main(int argc,
 
 		// Create a new Cgicc object containing all the CGI data
 		Cgicc cgi;
-		//	Database data;
-
-	
-		// If the user wants to throw an exception, go ahead and do it
-		if(cgi.queryCheckbox("throw") && ! cgi.queryCheckbox("restore"))
-			throw std::runtime_error("User-requested Exception thrown in main()");
-
-		// Output the HTTP headers for an HTML document, and the HTML 4.0 DTD info
-		cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
+	cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
 		cout << html().set("lang", "en").set("dir", "ltr") << endl;
 
 		// Set up the page's header and title.
@@ -278,58 +229,15 @@ int main(int argc,
 		// Get a pointer to the environment
 		const CgiEnvironment& env = cgi.getEnvironment();
 
-		// Generic thank you message
-		cout << comment() << "This page generated by cgicc for "
-			<< env.getRemoteHost() << comment() << endl;
-	
 
 
 
-		// If the user wants to restore from the last submission, do it
-		if(cgi.queryCheckbox("restore")) {
-			cgi.restore("save");
-			cout << p(h2("Data Restored")) << endl;
 
-			cout << cgicc::div().set("class", "notice") << endl;
-			cout << "The data displayed has been restored from a file on disk."
-				<< endl << cgicc::div() << p() << endl;
-		}
-	cout << br() << endl;
+cout << br() << endl;
+		if(print == true){
 		printForm(cgi);
-		cout << hr().set("class", "half") << endl;
-
-		// Information on cgicc
-	//	cout << cgicc::div().set("align","center").set("class","smaller") << endl;
-	//	cout << "GNU cgi" << span("cc").set("class","red") << " v";
-	//	cout << cgi.getVersion() << br() << endl;
-	//	cout << "Compiled at " << cgi.getCompileTime();
-	//	cout << " on " << cgi.getCompileDate() << br() << endl;
-
-	//	cout << "Configured for " << cgi.getHost();  
-#if HAVE_UNAME
-		struct utsname info;
-		if(uname(&info) != -1) {
-			cout << ". Running on " << info.sysname;
-			cout << ' ' << info.release << " (";
-			cout << info.nodename << ")." << endl;
-		}
-#else
-		cout << "." << endl;
-#endif
-
-#if HAVE_GETTIMEOFDAY
-		// Information on this query
-		timeval end;
-		gettimeofday(&end, NULL);
-		long us = ((end.tv_sec - start.tv_sec) * 1000000)
-			+ (end.tv_usec - start.tv_usec);
-
-		cout << br() << "Total time for request = " << us << " us";
-		cout << " (" << static_cast<double>(us/1000000.0) << " s)";
-#endif
-
-		// End of document
-		cout << cgicc::div() << endl;
+}
+	cout << cgicc::div() << endl;
 		cout << body() << html() << endl;
 
 			if (checkSem(cgi)&&checkName(cgi)&&checkCredits(cgi)&&checkDate(cgi)&&checkEvents(cgi)){ 	
@@ -339,9 +247,13 @@ int main(int argc,
 			const_form_iterator semesters = cgi.getElement("semesters");
 			const_form_iterator credit = cgi.getElement("credits");
 			const_form_iterator tags = cgi.getElement("events");
+					
 			database db(argv[1]);
+			print = false;
 			db.insertStudentData(name->getStrippedValue(),mail->getStrippedValue(),credit->getIntegerValue(), semesters->getStrippedValue(), year->getIntegerValue(), tags->getStrippedValue());
 			showForm(cgi);
+			
+
 		}
 	
 
@@ -373,7 +285,7 @@ int main(int argc,
 
 		// Output the style sheet portion of the header
 		cout << style() << comment() << endl;
-		cout << "body { color: black; background-color: white; }" << endl;
+		cout << "body { color: black; background-color: black; }" << endl;
 		cout << "hr.half { width: 60%; align: center; }" << endl;
 		cout << "span.red, STRONG.red { color: red; }" << endl;
 		cout << "div.notice { border: solid thin; padding: 1em; margin: 1em 0; "
