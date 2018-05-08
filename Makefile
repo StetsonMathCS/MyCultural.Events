@@ -1,4 +1,4 @@
-all: demo.cgi completedemo.cgi
+all: demo.cgi completedemo.cgi parser main
 
 demo.cgi: demo.o
 	g++ -Wall -o demo.cgi demo.o -lcgicc
@@ -33,3 +33,24 @@ database.o: database.h sqlite3.h database.cpp student.h ccevent.h
 sqlite3.o: sqlite3.h sqlite3.c
 	gcc -c sqlite3.c
 
+# RSS parser files
+parser: rssdaemon/parser.o database.o sqlite3.o ccevent.o student.o
+	g++ -pthread -Wall -g -o rssdaemon/parser rssdaemon/parser.o sqlite3.o database.o ccevent.o student.o -lpugixml -ldl
+
+parser.o: rssdaemon/parser.cpp database.h ccevent.h
+	g++ -Wall -g -c rssdaemon/parser.cpp
+
+# email daemon files
+main: emaildaemon/main.o ccevent.o database.o student.o emaildaemon/makeemail.o
+	g++ -Wall -g -o emaildaemon/main ccevent.o database.o student.o emaildaemon/makeemail.o emaildaemon/main.o -lsqlite3
+
+main.o: emaildaemon/main.cpp ccevent.h database.h student.h emaildaemon/makeemail.h
+	g++ -Wall -g -c emaildaemon/main.cpp ccevent.h database.h student.h emaildaemon/makeemail.h
+
+makeemail.o: emaildaemon/makeemail.h emaildaemon/makeemail.cpp student.h ccevent.h
+	g++ -Wall -g -c emaildaemon/makeemail.cpp student.cpp ccevent.cpp
+
+# command that deletes .o files and binary files
+.PHONY: clean
+clean:
+	rm -f *.o rssdaemon/*.o rssdaemon/parser cgicc/*.o emaildaemon/*.o emaildaemon/main
