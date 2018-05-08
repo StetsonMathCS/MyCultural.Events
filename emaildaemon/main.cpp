@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include "../student.h"
 #include "../ccevent.h"
 #include "makeemail.h"
@@ -20,13 +21,14 @@ int main(int argc, const char** argv){
 	MakeEmail me;	
 	//Student st;
 	//CCEvent e;
-	vector<Student> stvec = db.searchStudentById(1);
-	vector<CCEvent> ccvec = db.searchEventById(13);
 	
-	//st = stvec[0];
-	//e = ccvec[0];
+	for(int i = 1; i < 2; i++){
+		vector<Student> stvec = db.searchStudentById(i);
+		vector<CCEvent> ccvec = db.searchEventById(13);
+		me.setEmailString(stvec, ccvec);
+		cout << me.getEmailString() << endl;
+	}
 
-	me.setEmailString(stvec, ccvec);
 
 	return 0;
 }
