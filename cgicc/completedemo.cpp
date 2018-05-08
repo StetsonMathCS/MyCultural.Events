@@ -71,7 +71,7 @@ printForm(const Cgicc& cgi)
 
 	cout << "<div class=\"form-group\">\n";	
 	cout <<	"<label for=\"name\">First Name</label>";
-	cout << "<input type=\"text\" class=\"form-control\" name=\"name\" value = \"\" aria-describedby=\"emailHelp\" placeholder=\"Enter first name\" maxlength=\"30\" pattern=\"[A-Za-z]+\" oninvalid=\"setCustomValidity('Name can only consist of letters')\" />";
+	cout << "<input type=\"text\" class=\"form-control\" name=\"name\" value = \"\" aria-describedby=\"emailHelp\" placeholder=\"Enter first name\" minLength=\"1\"  maxlength=\"30\" pattern=\"[A-Za-z]+\" oninvalid=\"setCustomValidity('Name can only consist of letters')\" />";
 	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter your first name.</small>";
 	cout << "</div>";
 
@@ -86,15 +86,15 @@ printForm(const Cgicc& cgi)
 	cout << "<input type=\"number\" class=\"form-control\" id =\"test\"  name=\"years\" value = \"2018\" min=\"2018\" aria-describedby=\"emailHelp\" placeholder=\"2018\">";
 	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Enter the year you will graduate</small>";
 	cout << "</div>";
-	
+
 	cout << "<div class=\"form-group\">\n";	
 	cout <<	"<label for=\"name\">Graduation Semester </label>";
-cout	<< "<select name=\"semesters\">"
-       << "<option value=\"Fall\">Fall</option>"
-      << "<option value=\"Spring\">Spring</option>"
-	 << "</select>" 
-	"</div>" << endl;
- 
+	cout	<< "<select name=\"semesters\">"
+		<< "<option value=\"Fall\">Fall</option>"
+		<< "<option value=\"Spring\">Spring</option>"
+		<< "</select>" 
+		"</div>" << endl;
+
 
 	cout << "<div class=\"form-group\">\n";	
 	cout <<	"<label for=\"name\">Cultural Credits</label>";
@@ -134,7 +134,7 @@ bool checkName(const Cgicc& cgi){
 			letters = false;
 		}
 	}
-	if(temp.length() <= 30 && letters == true){
+	if(temp.length() <= 30 && temp.length() > 0 && letters == true){
 		return true;
 	}else{
 
@@ -205,7 +205,7 @@ int main(int argc,
 
 		// Create a new Cgicc object containing all the CGI data
 		Cgicc cgi;
-	cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
+		cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
 		cout << html().set("lang", "en").set("dir", "ltr") << endl;
 
 		// Set up the page's header and title.
@@ -220,42 +220,33 @@ int main(int argc,
 		cout << title() << "MYCULTURAL.EVENTS" << title() << endl;
 
 		cout << head() << endl;
-
-		// Start the HTML body
 		cout << body() << endl;
 
-		cout << h1() << "<center>MYCULTURAL.EVENTS" << h1() << endl;
-
-		// Get a pointer to the environment
-		const CgiEnvironment& env = cgi.getEnvironment();
-
-
-
-
-
-cout << br() << endl;
-		if(print == true){
-		printForm(cgi);
-}
-	cout << cgicc::div() << endl;
-		cout << body() << html() << endl;
-
-			if (checkSem(cgi)&&checkName(cgi)&&checkCredits(cgi)&&checkDate(cgi)&&checkEvents(cgi)){ 	
+		if (checkSem(cgi)&&checkName(cgi)&&checkCredits(cgi)&&checkDate(cgi)&&checkEvents(cgi)){ 	
 			const_form_iterator name = cgi.getElement("name");
 			const_form_iterator mail = cgi.getElement("email");
 			const_form_iterator year = cgi.getElement("years");
 			const_form_iterator semesters = cgi.getElement("semesters");
 			const_form_iterator credit = cgi.getElement("credits");
 			const_form_iterator tags = cgi.getElement("events");
-					
+
 			database db("../MyCultural.db");
-			print = false;
 			db.insertStudentData(name->getStrippedValue(),mail->getStrippedValue(),credit->getIntegerValue(), semesters->getStrippedValue(), year->getIntegerValue(), tags->getStrippedValue());
-			showForm(cgi);
-			
+
+			cout << h1() << "Thank you." << h1() << endl;
 
 		}
-	
+		else
+		{
+			// Start the HTML body
+
+			cout << h1() << "<center>MYCULTURAL.EVENTS" << h1() << endl;
+			cout << br() << endl;
+			printForm(cgi);
+		}
+
+		cout << cgicc::div() << endl;
+		cout << body() << html() << endl;
 
 		// No chance for failure in this example
 		return EXIT_SUCCESS;
@@ -309,8 +300,8 @@ cout << br() << endl;
 		cout << cgicc::div() << endl;
 		cout << hr().set("class","half") << endl;
 		cout << body() << html() << endl;
-		
-		
+
+
 
 		return EXIT_SUCCESS;
 	}
@@ -391,14 +382,3 @@ dumpEnvironment(const CgiEnvironment& env )
 	cout << table() << cgicc::div() << endl;
 }
 
-// Print out the value of every form element
-void
-showForm(const Cgicc& formData) 
-{ 		
-
-	cout << "<div class=\"form-group\">\n";
-	cout << "<font size=\"+5\">Thank You!</font>"; 	
-	cout << "<small id=\"emailHelp\" class=\"form-text text-muted\">Your information was stored successfully!</small>";
-	cout << "</div>";
-	cout << "<META HTTP-EQUIV=refresh CONTENT=\"1;URL=http://mycultural.events/thanks.txt\">\n";	
-}
