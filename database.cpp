@@ -478,7 +478,6 @@ vector<CCEvent> database::searchEventByPreferences(string word)
 		CCEvent event(tempId, tempName,tempDate, tempLocation, tempDesc);
 		v.push_back(event);
         }
-	cout << "After push" << endl;
 	sqlite3_finalize(stmt);
 
 	//v = searchEventById(rowsInEventTable());
