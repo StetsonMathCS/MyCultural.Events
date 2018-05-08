@@ -111,6 +111,18 @@ void database::insertEventData(string name,string time,string loc,string desc)
 	const char *szErrMsg = 0;
 	int rc = sqlite3_prepare(db,query.c_str(), -1, &stmt, &szErrMsg);
 
+	if( rc == SQLITE_OK ) {
+ 
+		sqlite3_bind_text(stmt, 1, name.c_str(), -1, NULL);
+		sqlite3_bind_text(stmt, 2, time.c_str(), -1, NULL);
+		sqlite3_bind_text(stmt, 3, loc.c_str(), -1, NULL);
+		sqlite3_bind_text(stmt, 4, desc.c_str(), -1, NULL);
+	}
+
+
+
+//	int rc = sqlite3_prepare(db,query.c_str(), -1, &stmt, &szErrMsg);
+
 	while ( (rc = sqlite3_step(stmt)) == SQLITE_ROW) {
 		(sqlite3_column_text(stmt, 1));
 		(sqlite3_column_text(stmt, 2));
