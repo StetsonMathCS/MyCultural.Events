@@ -1,16 +1,10 @@
-all: demo.cgi completedemo.cgi databaseTest parser main
+all: completedemo.cgi databaseTest parser main
 
-demo.cgi: demo.o
-	g++ -Wall -o demo.cgi demo.o -lcgicc
+completedemo.cgi: cgicc/completedemo.o database.o ccevent.o student.o
+	g++ -pthread -Wall -o completedemo.cgi cgicc/completedemo.o database.o ccevent.o student.o -ldl -lcgicc -lsqlite3
 
-demo.o: demo.cpp
-	g++ -Wall -c demo.cpp
-
-completedemo.cgi: completedemo.o
-	g++ -Wall -o completedemo.cgi completedemo.o -lcgicc
-
-completedemo.o: completedemo.cpp
-	g++ -Wall -c completedemo.cpp
+completedemo.o: cgicc/completedemo.cpp database.h ccevent.h student.h
+	g++ -Wall -c cgicc/completedemo.cpp
 
 student.o: student.cpp database.h
 	g++ -Wall -c student.cpp
@@ -38,7 +32,7 @@ parser.o: rssdaemon/parser.cpp database.h ccevent.h
 
 # email daemon files
 main: emaildaemon/main.o ccevent.o database.o student.o emaildaemon/makeemail.o
-	g++ -Wall -g -o emaildaemon/main ccevent.o database.o student.o emaildaemon/makeemail.o emaildaemon/main.o -lsqlite3
+	g++ -Wall -g -o emaildaemon/main ccevent.o database.o student.o emaildaemon/makeemail.o emaildaemon/main.o -lcurl -lsqlite3
 
 main.o: emaildaemon/main.cpp ccevent.h database.h student.h emaildaemon/makeemail.h
 	g++ -Wall -g -c emaildaemon/main.cpp ccevent.h database.h student.h emaildaemon/makeemail.h
