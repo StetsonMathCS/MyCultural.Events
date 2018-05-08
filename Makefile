@@ -1,4 +1,4 @@
-all: completedemo.cgi databaseTest parser main
+all: completedemo.cgi databaseTest parser emailer
 
 completedemo.cgi: cgicc/completedemo.o database.o ccevent.o student.o
 	g++ -pthread -Wall -o completedemo.cgi cgicc/completedemo.o database.o ccevent.o student.o -ldl -lcgicc -lsqlite3
@@ -31,7 +31,7 @@ parser.o: rssdaemon/parser.cpp database.h ccevent.h
 	g++ -Wall -g -c rssdaemon/parser.cpp
 
 # email daemon files
-main: emaildaemon/main.o ccevent.o database.o student.o emaildaemon/makeemail.o
+emailer: emaildaemon/main.o ccevent.o database.o student.o emaildaemon/makeemail.o
 	g++ -Wall -g -o emaildaemon/main ccevent.o database.o student.o emaildaemon/makeemail.o emaildaemon/main.o -lcurl -lsqlite3
 
 main.o: emaildaemon/main.cpp ccevent.h database.h student.h emaildaemon/makeemail.h
