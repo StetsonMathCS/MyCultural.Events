@@ -24,5 +24,7 @@ class MakeEmail {
 		void storeEmailString(std::string);
 		std::string getEmailString();
 
+		std::string escape(std::string const &s);
+		void emails(std::string, std::string, std::string);
 };
 #endif
