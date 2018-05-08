@@ -1,4 +1,4 @@
-all: completedemo.cgi databaseTest parser mailer
+all: completedemo.cgi parser mailer
 
 completedemo.cgi: cgicc/completedemo.o database.o ccevent.o student.o
 	g++ -pthread -Wall -o index.cgi cgicc/completedemo.o database.o ccevent.o student.o -ldl -lcgicc -lsqlite3
