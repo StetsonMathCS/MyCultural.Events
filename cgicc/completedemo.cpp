@@ -248,7 +248,7 @@ cout << br() << endl;
 			const_form_iterator credit = cgi.getElement("credits");
 			const_form_iterator tags = cgi.getElement("events");
 					
-			database db(argv[1]);
+			database db("../MyCultural.db");
 			print = false;
 			db.insertStudentData(name->getStrippedValue(),mail->getStrippedValue(),credit->getIntegerValue(), semesters->getStrippedValue(), year->getIntegerValue(), tags->getStrippedValue());
 			showForm(cgi);
