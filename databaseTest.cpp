@@ -19,7 +19,7 @@ int main(int argc, const char **argv)
 	//vector<Student> v = db.searchStudentById(1);
         //cout << db.rowsInEventTable() << endl;
 	//cout << v[0].getName() + " " + v[0].getEmail() + " ";
-	vector<CCEvent> v = db.searchEventByPreferences("meal");
+	vector<CCEvent> v = db.searchEventByLoc("the commons");
 	//cout << v[0].getId() << endl;
 	cout << v[0].getTitle() + " " + v[0].getDateTime() + " ";
 	cout << v[1].getTitle() + " " + v[1].getDateTime() + " ";

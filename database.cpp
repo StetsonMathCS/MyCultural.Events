@@ -445,7 +445,7 @@ vector<Student> database::searchStudentByGradyear(int year)
 }
 
 
-vector<CCEvent> database::searchEventByPreferences(string word)
+/* vector<CCEvent> database::searchEventByPreferences(string word)
 {
 	vector<CCEvent> v;
 	sqlite3_stmt *stmt;
@@ -465,10 +465,11 @@ vector<CCEvent> database::searchEventByPreferences(string word)
         }
         CCEvent event(tempId, tempName,tempDate, tempLocation, tempDesc);
         v.push_back(event);
+	cout << "After push" << endl;
 	sqlite3_finalize(stmt);
 
 	//v = searchEventById(rowsInEventTable());
-	/*
+	
 	for (std::vector<CCEvent>::iterator it = v.begin(); it != v.end(); ++it)
 	{
 		string tempDesc = it->getDescription();
@@ -477,11 +478,11 @@ vector<CCEvent> database::searchEventByPreferences(string word)
 			v.erase(it);
 		}
 	}
-	*/
+	
         return v;
 
 }
-
+*/
 //search by event name
 vector<CCEvent> database::searchEventByName(string word)
 {
