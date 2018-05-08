@@ -6,6 +6,7 @@
 #include "makeemail.h"
 #include "../database.h"
 #include <sqlite3.h>
+//#include "emailer.cpp"
 
 using namespace std;
 #include <string>
@@ -29,6 +30,6 @@ int main(int argc, const char** argv){
 		cout << me.getEmailString() << endl;
 	}
 
-
+	me.emails("heyley.gatewood@gmail.com", "Cultural Credit Event", me.getEmailString());
 	return 0;
 }

@@ -99,28 +99,29 @@ void database::insertStudentData(string name, string email, int currentCC , stri
 
 void database::insertEventData(string name,string time,string loc,string desc)
 {
+
+	sqlite3_stmt * stmt;
 	vector<CCEvent> v = searchEventByName(name);
 	if(name == v[0].getTitle() && time == v[0].getDateTime() && loc == v[0].getLocation()){
 		return;
 	} 
-	string query="INSERT INTO EventTable(name, date_and_time, location, description) VALUES (";
-	query.append("'"+name+"','");
-	query.append(time+"','");
-	query.append(loc+"','");
-	query.append(desc+"')");
-
-
+	string query="INSERT INTO EventTable(name, date_and_time, location, description) VALUES (?,?,?,?)";
 	cout<<query<<endl;
-	char *szErrMsg = 0;
-	int rc = sqlite3_exec(db,query.c_str() , NULL, NULL, &szErrMsg);
-	if (rc != SQLITE_OK)
-	{
-		cout << "SQL Error chk: " << szErrMsg << endl;
-		sqlite3_free(szErrMsg);
+	const char *szErrMsg = 0;
+	int rc = sqlite3_prepare(db,query.c_str(), -1, &stmt, &szErrMsg);
 
+	while ( (rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+		(sqlite3_column_text(stmt, 1));
+		(sqlite3_column_text(stmt, 2));
+		(sqlite3_column_text(stmt, 3));
+		(sqlite3_column_text(stmt, 4));
 	}
 
+	sqlite3_finalize(stmt);
+	
 }
+
+
 // return is the table has values and how many
 int database::rowsInStudentTable ( )
 {
