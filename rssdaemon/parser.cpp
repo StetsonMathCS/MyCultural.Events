@@ -1,32 +1,52 @@
 #include "pugixml.hpp"
 #include <iostream>
+#include <stdlib.h>
+#include "../database.h"
+#include "../ccevent.h"
 
-using namespace pugi;
+using namespace std;
 
-int main()
-{
-	xml_document doc;
-	doc.load_file("cultural-credits.rss");
-	xml_node root = doc.child("rss").child("channel");
-	const std::string NC = "\e[0m";
-	const std::string BOLD = "\e[1m";
-	const std::string RED = "\e[38;5;196m";
-	std::cout << std::endl;
-
-	for (xml_node item = root.child("item"); item; item = item.next_sibling("item"))
+int main(int argc, const char **argv)
+{	
+	//checks if you put in location of database as an argument
+	if (argc !=2)
 	{
-		std::cout << RED << "title: " << NC << BOLD << item.child("title").child_value() << NC << std::endl;
-		std::string description = item.child("description").child_value();
-		if (description!="")
-		{	
-			std::cout << RED << "description: " << NC << item.child("description").child_value() << std::endl;
-		} else 
-		{
-			std::cout << RED << "no description" << NC << std::endl;
-		}
-		std::cout << RED << "pubDate: " << NC << item.child("pubDate").child_value() << std::endl;
-		std::cout << RED << "link: " << NC << item.child("link").child_value() << std::endl;
-		std::cout << RED << "guid: " << NC << item.child("guid").child_value() << std::endl;
-		std::cout << std::endl << std::endl;
+		cout << "Usage: " << argv[0] << " databasename.db" << endl;
+		return -1;
+	}
+	database db(argv[1]);
+	
+	//downloads rss feed
+	pugi::xml_document RSSfeed;
+	RSSfeed.load_file("/home/myculturalevents/rss.txt");
+	pugi::xml_node root = RSSfeed.child("rss").child("channel");
+
+	//strings for making text red and changing it back to white
+	const string NC = "\e[0m";
+	const string RED = "\e[38;5;196m";
+	
+	//for each cultural event in the feed
+	for (pugi::xml_node item = root.child("item"); item; item = item.next_sibling("item"))
+	{
+		string title = item.child("title").child_value();
+		string description = item.child("description").child_value();
+		string pubdate = item.child("pubDate").child_value();
+		string link = item.child("link").child_value();
+		
+		//downloads file from cultural event link and retrives the location that is not present in rss file
+		string curl = "curl -o /home/myculturalevents/tmp.html ";
+		string command = curl.append(link);
+		system(command.c_str());
+		pugi::xml_document eventPage;
+		eventPage.load_file("/home/myculturalevents/tmp.html");
+		string location = eventPage.child("html").child("body").child("div").child("article").child("div").last_child().child_value();
+		
+		//prints out title and pubDate for debugging pourposes
+		cout << endl << RED << "title: " << NC << title << endl;
+		cout << RED << "pubDate: " << NC << pubdate  << endl;
+		cout << RED << "location: " << NC << location << endl << endl;
+
+		//inserts the event into the database
+		db.insertEventData(title, pubdate, location, description);
 	}
 }

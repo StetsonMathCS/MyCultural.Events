@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>Cultural Credits Events</title>
+        <description>Stetson University's Cultural Credits Calendar of Events</description>
+        <link>https://www.stetson.edu/programs/calendar/cultural-credits</link>
+        <lastBuildDate>Tue, 08 May 2018 16:00:09 +0000</lastBuildDate>
+        <item>
+            <guid>f8f321a4-2d16-11e8-a614-c30927f01f96</guid>
+            <title>*Chris Abani Reading*</title>
+            <description>Fall Sullivan Reading
+Where: Rinker Welcome Center: Lynn Presentation Room
+When: October 23, 2018 from 7 pm to 9 pm
+Cultural Credit Approved</description>
+            <pubDate>Tue, 23 Oct 2018 23:00:00 +0000</pubDate>
+            <link>https://www.stetson.edu/programs/calendar/event.php?id=f8f321a4-2d16-11e8-a614-c30927f01f96</link>
+        </item>
+    </channel>
+</rss>
