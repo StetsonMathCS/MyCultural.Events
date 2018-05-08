@@ -32,7 +32,7 @@ parser.o: rssdaemon/parser.cpp database.h ccevent.h
 
 # email daemon files
 main: emaildaemon/main.o ccevent.o database.o student.o emaildaemon/makeemail.o
-	g++ -Wall -g -o emaildaemon/main ccevent.o database.o student.o emaildaemon/makeemail.o emaildaemon/main.o -lsqlite3
+	g++ -Wall -g -o emaildaemon/main ccevent.o database.o student.o emaildaemon/makeemail.o emaildaemon/main.o -lcurl -lsqlite3
 
 main.o: emaildaemon/main.cpp ccevent.h database.h student.h emaildaemon/makeemail.h
 	g++ -Wall -g -c emaildaemon/main.cpp ccevent.h database.h student.h emaildaemon/makeemail.h
